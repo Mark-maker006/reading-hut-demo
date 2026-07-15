@@ -207,6 +207,47 @@ body {
   opacity: 1;
 }
 
+.exchange-success-tip {
+  position: absolute;
+  right: 112px;
+  bottom: 234px;
+  z-index: 10;
+  width: 236px;
+  padding: 10px 14px 11px;
+  border: 2px solid rgba(216, 160, 73, 0.95);
+  border-radius: 22px 22px 8px 22px;
+  color: #6a3c12;
+  background: linear-gradient(180deg, #fff7d7 0%, #ffe7a6 100%);
+  box-shadow: 0 7px 14px rgba(91, 52, 13, 0.18), inset 0 2px 0 rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.28;
+  text-align: left;
+  pointer-events: none;
+  transform: translateX(calc(100% + 112px));
+  transform-origin: right center;
+  opacity: 0;
+  transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1), opacity 400ms ease;
+}
+
+.exchange-success-tip::after {
+  position: absolute;
+  right: -10px;
+  bottom: 12px;
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(216, 160, 73, 0.95);
+  border-bottom: 2px solid rgba(216, 160, 73, 0.95);
+  background: #ffe7a6;
+  content: "";
+  transform: rotate(-16deg) skew(18deg, 18deg);
+}
+
+.exchange-success-tip.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
 .room-mascot {
   position: absolute;
   left: 236px;
@@ -723,7 +764,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: rgba(51, 51, 51, 0.8);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
