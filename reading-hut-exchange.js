@@ -18,7 +18,18 @@
     };
   }
 
+  function promoteItemById(items, itemId) {
+    const index = items.findIndex(function (item) {
+      return item.id === itemId;
+    });
+
+    if (index <= 0) return items.slice();
+
+    return [items[index]].concat(items.slice(0, index), items.slice(index + 1));
+  }
+
   return {
     getExchangeOutcome: getExchangeOutcome,
+    promoteItemById: promoteItemById,
   };
 });
