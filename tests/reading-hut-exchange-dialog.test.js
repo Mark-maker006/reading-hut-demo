@@ -56,7 +56,10 @@ test('insufficient mode follows the Figma 219:1905 inspector geometry', () => {
 });
 
 test('locked card clicks branch on balance and confirmation performs a real exchange', () => {
-  assert.match(html, /const \{ getExchangeOutcome \} = window\.ReadingHutExchange;/);
+  assert.match(
+    html,
+    /const \{ getExchangeOutcome(?:,\s*promoteItemById)? \} = window\.ReadingHutExchange;/,
+  );
   assert.match(html, /const outcome = getExchangeOutcome\(starBalance, item\.stars\);/);
   assert.match(html, /dialog\.dataset\.mode = outcome\.canAfford \? 'sufficient' : 'insufficient';/);
   assert.match(html, /starBalance = outcome\.remaining;/);
