@@ -185,6 +185,8 @@
         let currentExchangeCategory = null;
         let successTipTimer = null;
         let latestExchangeItemId = null;
+        let selectedItemId = null;
+        let selectedCategory = null;
         const DRAG_THRESHOLD = 6;
         const dragState = {
           pointerId: null,
@@ -263,6 +265,7 @@
         }
 
         function openPanel(category, animate) {
+          clearBagItemSelection();
           const isDecoration = category === 'decoration';
           panelBg.src = isDecoration
             ? './assets/bag-panel-decorative.png'
@@ -322,6 +325,26 @@
           return (ITEMS[category] || []).find(function (item) {
             return item.id === itemId;
           });
+        }
+
+        function clearBagItemSelection() {
+          itemList.querySelectorAll('.bag-item.is-selected').forEach(function (card) {
+            card.classList.remove('is-selected');
+            const item = findItem(card.dataset.category, card.dataset.itemId);
+            if (item && item.href) {
+              card.setAttribute('aria-label', item.name + ' ' + item.stars + '星');
+            }
+          });
+          selectedItemId = null;
+          selectedCategory = null;
+        }
+
+        function selectBagItem(card, item) {
+          clearBagItemSelection();
+          selectedItemId = item.id;
+          selectedCategory = card.dataset.category;
+          card.classList.add('is-selected');
+          card.setAttribute('aria-label', item.name + ' 已选中，再次点击放置');
         }
 
         function updateTopStarBalance() {
@@ -421,7 +444,18 @@
           if (!card) return;
           if (card.dataset.itemId === latestExchangeItemId) hideExchangeSuccessTip();
           const item = findItem(card.dataset.category, card.dataset.itemId);
-          if (!item || item.unlocked) return;
+          if (!item) return;
+          if (item.unlocked) {
+            if (!item.href) return;
+            if (selectedItemId === item.id && selectedCategory === card.dataset.category) {
+              clearBagItemSelection();
+              return;
+            }
+            e.preventDefault();
+            selectBagItem(card, item);
+            return;
+          }
+          clearBagItemSelection();
           e.preventDefault();
           openExchangeDialog(item, card.dataset.category);
         });
@@ -444,6 +478,7 @@
           item.newUntil = Date.now() + NEW_TAG_DURATION_MS;
           updateTopStarBalance();
           updateUnlockedCard(item);
+          clearBagItemSelection();
           ITEMS[category] = promoteItemById(ITEMS[category], item.id);
           renderItems(category);
           itemList.scrollLeft = 0;
@@ -473,6 +508,7 @@
 
         function closeBag() {
           hideExchangeSuccessTip();
+          clearBagItemSelection();
           page.classList.remove('bag-open');
           panel.setAttribute('aria-hidden', 'true');
           overlay.setAttribute('aria-hidden', 'true');

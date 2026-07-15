@@ -37,13 +37,13 @@ test('ghost and star nodes use transparent layers rather than white flattened ex
   assert.match(css, /\.ghost-plant-item\s*\{[^}]*opacity:\s*0\.6;/s);
 });
 
-test('shared panel uses the exact Figma frame and card-list geometry', () => {
+test('shared panel preserves the Figma card position with selected-state headroom', () => {
   assert.match(html, /class="bag-panel-bg"/);
   assert.match(html, /bag-panel-furniture\.png/);
   assert.match(html, /bag-panel-decorative\.png/);
   assert.match(html, /panelBg\.src\s*=\s*isDecoration/);
   assert.match(css, /\.bag-panel\s*\{[^}]*left:\s*15px;[^}]*bottom:\s*16px;[^}]*width:\s*362px;[^}]*height:\s*192px;/s);
-  assert.match(css, /\.bag-item-list\s*\{[^}]*top:\s*47px;[^}]*left:\s*10px;[^}]*width:\s*343px;[^}]*height:\s*126px;/s);
+  assert.match(css, /\.bag-item-list\s*\{[^}]*top:\s*41px;[^}]*left:\s*10px;[^}]*width:\s*343px;[^}]*height:\s*138px;[^}]*padding:\s*6px 0;/s);
   assert.match(css, /\.bag-item-list\s*\{[^}]*overflow-x:\s*auto;[^}]*overflow-y:\s*hidden;/s);
   assert.match(css, /\.bag-item-card\s*\{[^}]*width:\s*87px;[^}]*height:\s*126px;/s);
 });
