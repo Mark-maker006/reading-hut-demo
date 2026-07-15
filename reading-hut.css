@@ -542,10 +542,10 @@ body {
 
 .bag-item-list {
   position: absolute;
-  top: 47px;
+  top: 41px;
   left: 10px;
   width: 343px;
-  height: 126px;
+  height: 138px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -554,7 +554,7 @@ body {
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  padding: 0;
+  padding: 6px 0;
   touch-action: pan-y;
   cursor: grab;
 }
@@ -585,6 +585,22 @@ body {
   width: 87px;
   height: 126px;
   overflow: visible;
+  border-radius: 11px;
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease;
+}
+
+.bag-item.is-selected {
+  position: relative;
+  z-index: 2;
+}
+
+.bag-item.is-selected .bag-item-card {
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 0 2px rgba(255, 225, 80, 0.92),
+    0 8px 14px rgba(82, 53, 15, 0.42);
 }
 
 .bag-item-card-bg {
