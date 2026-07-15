@@ -6,7 +6,7 @@
     root.ReadingHutPlacementMotion = api;
   }
 })(typeof globalThis !== 'undefined' ? globalThis : this, function (root) {
-  const FLIGHT_DURATION_MS = 900;
+  const FLIGHT_DURATION_MS = 1100;
   const SMOKE_DURATION_MS = 1050;
   const TOTAL_DURATION_MS = 2200;
   const SMOKE_PUFFS = [
@@ -29,11 +29,37 @@
     return rounded(1 + (endScale - 1) * progress);
   }
 
-  function createFlightGeometry(source, target) {
+  function isHorizontallyMirrored(transform, scale) {
+    const scaleMatch = String(scale || '').match(/^\s*(-?\d*\.?\d+)/);
+    if (scaleMatch && Number(scaleMatch[1]) < 0) return true;
+
+    const matrixMatch = String(transform || '').match(/^matrix\(\s*(-?\d*\.?\d+)/);
+    if (matrixMatch) return Number(matrixMatch[1]) < 0;
+
+    const matrix3dMatch = String(transform || '').match(/^matrix3d\(\s*(-?\d*\.?\d+)/);
+    return Boolean(matrix3dMatch && Number(matrix3dMatch[1]) < 0);
+  }
+
+  function orientationAngles(sourceMirrored, targetMirrored) {
+    const start = sourceMirrored ? 180 : 0;
+    let end = targetMirrored ? 180 : 0;
+    if (end <= start) end += 360;
+    return { start: start, end: end };
+  }
+
+  function flightTransform(x, y, scaleX, scaleY, yaw, zRotation) {
+    return 'perspective(700px) translate3d(' + rounded(x) + 'px, ' + rounded(y) +
+      'px, 0) scale(' + rounded(scaleX) + ', ' + rounded(scaleY) + ') rotateY(' +
+      rounded(yaw) + 'deg) rotateZ(' + rounded(zRotation) + 'deg)';
+  }
+
+  function createFlightGeometry(source, target, orientation) {
     const dx = target.left - source.left;
     const dy = target.top - source.top;
     const scaleX = target.width / source.width;
     const scaleY = target.height / source.height;
+    const direction = orientation || {};
+    const yaw = orientationAngles(direction.sourceMirrored === true, direction.targetMirrored === true);
     const lift = Math.max(70, Math.abs(dy) * 0.24);
     const startX = source.left + source.width / 2;
     const startY = source.top + source.height / 2;
@@ -53,25 +79,48 @@
         {
           offset: 0,
           opacity: 1,
-          transform: 'translate3d(0px, 0px, 0) scale(1, 1) rotate(-4deg)',
+          transform: flightTransform(0, 0, 1, 1, yaw.start, -4),
         },
         {
-          offset: 0.32,
+          offset: 0.24,
           opacity: 1,
-          transform: 'translate3d(' + rounded(dx * 0.28) + 'px, ' + rounded(dy * 0.08 - lift * 0.55) +
-            'px, 0) scale(' + scaleAt(0.34, scaleX) + ', ' + scaleAt(0.34, scaleY) + ') rotate(6deg)',
+          transform: flightTransform(
+            dx * 0.18,
+            dy * 0.02 - lift * 0.48,
+            scaleAt(0.24, scaleX),
+            scaleAt(0.24, scaleY),
+            yaw.start + (yaw.end - yaw.start) * 0.24,
+            7,
+          ),
         },
         {
-          offset: 0.68,
+          offset: 0.52,
           opacity: 1,
-          transform: 'translate3d(' + rounded(dx * 0.72) + 'px, ' + rounded(dy * 0.55 - lift * 0.32) +
-            'px, 0) scale(' + scaleAt(0.72, scaleX) + ', ' + scaleAt(0.72, scaleY) + ') rotate(-3deg)',
+          transform: flightTransform(
+            dx * 0.52,
+            dy * 0.28 - lift * 0.52,
+            scaleAt(0.52, scaleX),
+            scaleAt(0.52, scaleY),
+            yaw.start + (yaw.end - yaw.start) * 0.52,
+            -5,
+          ),
+        },
+        {
+          offset: 0.78,
+          opacity: 1,
+          transform: flightTransform(
+            dx * 0.82,
+            dy * 0.68 - lift * 0.22,
+            scaleAt(0.82, scaleX),
+            scaleAt(0.82, scaleY),
+            yaw.start + (yaw.end - yaw.start) * 0.78,
+            2,
+          ),
         },
         {
           offset: 1,
           opacity: 1,
-          transform: 'translate3d(' + rounded(dx) + 'px, ' + rounded(dy) + 'px, 0) scale(' +
-            rounded(scaleX) + ', ' + rounded(scaleY) + ') rotate(0deg)',
+          transform: flightTransform(dx, dy, scaleX, scaleY, yaw.end, 0),
         },
       ],
     };
@@ -84,6 +133,15 @@
       top: rect.top - layerRect.top,
       width: rect.width,
       height: rect.height,
+    };
+  }
+
+  function createFallbackTarget(source, slot) {
+    return {
+      left: slot.left + (slot.width - source.width) / 2,
+      top: slot.top + (slot.height - source.height) / 2,
+      width: source.width,
+      height: source.height,
     };
   }
 
@@ -146,8 +204,20 @@
 
     const layerRect = layer.getBoundingClientRect();
     const source = relativeRect(sourceElement, layerRect);
-    const target = relativeRect(targetElement, layerRect);
-    const geometry = createFlightGeometry(source, target);
+    const targetSlot = relativeRect(targetElement, layerRect);
+    const targetVisual = options.targetVisualElement
+      ? relativeRect(options.targetVisualElement, layerRect)
+      : createFallbackTarget(source, targetSlot);
+    const sourceStyle = root.getComputedStyle(sourceElement);
+    const targetStyle = options.targetVisualElement
+      ? root.getComputedStyle(options.targetVisualElement)
+      : null;
+    const geometry = createFlightGeometry(source, targetVisual, {
+      sourceMirrored: isHorizontallyMirrored(sourceStyle.transform, sourceStyle.scale),
+      targetMirrored: targetStyle
+        ? isHorizontallyMirrored(targetStyle.transform, targetStyle.scale)
+        : false,
+    });
     const flyer = layer.ownerDocument.createElement('img');
     flyer.className = 'placement-flyer';
     flyer.src = options.imageSrc;
@@ -185,7 +255,7 @@
       await flightAnimation.finished;
       impact();
       flyer.style.opacity = '0';
-      createSmoke(smokeLayer, target);
+      createSmoke(smokeLayer, targetSlot);
       smokeLayer.offsetWidth;
       smokeLayer.classList.add('is-active');
       await Promise.allSettled([trailAnimation.finished, wait(SMOKE_DURATION_MS)]);
@@ -206,7 +276,10 @@
     SMOKE_DURATION_MS: SMOKE_DURATION_MS,
     TOTAL_DURATION_MS: TOTAL_DURATION_MS,
     SMOKE_PUFFS: SMOKE_PUFFS,
+    isHorizontallyMirrored: isHorizontallyMirrored,
+    orientationAngles: orientationAngles,
     createFlightGeometry: createFlightGeometry,
+    createFallbackTarget: createFallbackTarget,
     playPlacementMotion: playPlacementMotion,
   };
 });

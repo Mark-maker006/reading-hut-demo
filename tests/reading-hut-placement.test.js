@@ -45,6 +45,17 @@ test('wood floor placement reveals the room background instead of stretching car
   assert.doesNotMatch(css, /\.ghost-floor-overlay\s*>\s*img\s*\{/);
 });
 
+test('placement motion targets the measurable final room artwork', () => {
+  assert.match(html, /const targetVisual = targetSlot\.querySelector\('\.placement-item'\);/);
+  assert.match(html, /targetVisualElement:\s*targetVisual,/);
+  assert.match(css, /\.placement-item\s*\{[^}]*visibility:\s*hidden;/s);
+  assert.match(
+    css,
+    /\.placement-slot\.is-placed \.placement-item,[\s\S]*?\.placement-slot\.is-previewing \.placement-item\s*\{[^}]*visibility:\s*visible;/s,
+  );
+  assert.match(css, /\.placement-flyer\s*\{[^}]*backface-visibility:\s*visible;[^}]*transform-style:\s*preserve-3d;/s);
+});
+
 test('demo reload restores stars and clears all placement progress', {
   timeout: 30000,
 }, async () => {

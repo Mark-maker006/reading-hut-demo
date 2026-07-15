@@ -409,6 +409,7 @@
           const sourceThumb = card.querySelector('.bag-item-thumb');
           const targetSlot = document.querySelector('.placement-slot[data-item-id="' + item.id + '"]');
           if (!sourceThumb || !targetSlot) return;
+          const targetVisual = targetSlot.querySelector('.placement-item');
 
           placementInProgress = true;
           currentPlacementItem = item;
@@ -420,6 +421,7 @@
             smokeLayer: placementSmokeLayer,
             sourceElement: sourceThumb,
             targetElement: targetSlot,
+            targetVisualElement: targetVisual,
             imageSrc: item.img,
             onImpact: function () {
               targetSlot.classList.add('is-previewing');

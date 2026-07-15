@@ -371,7 +371,7 @@ body {
 }
 
 .placement-item {
-  display: none;
+  visibility: hidden;
 }
 
 .placement-slot.is-placed .placement-ghost,
@@ -381,7 +381,7 @@ body {
 
 .placement-slot.is-placed .placement-item,
 .placement-slot.is-previewing .placement-item {
-  display: block;
+  visibility: visible;
 }
 
 .placement-slot.is-settling .placement-item {
@@ -879,6 +879,8 @@ body {
   object-fit: fill;
   transform-origin: 0 0;
   filter: drop-shadow(0 7px 8px rgba(83, 45, 9, 0.28)) drop-shadow(0 0 7px rgba(255, 241, 137, 0.88));
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   user-select: none;
   pointer-events: none;
   will-change: transform;
