@@ -2,6 +2,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+const { chromium } = require('playwright');
 
 const { promoteItemById } = require('../reading-hut-exchange.js');
 const root = path.resolve(__dirname, '..');
@@ -41,3 +43,49 @@ test('NEW tag keeps the Figma card coordinates and local artwork', () => {
   assert.match(html, /\.\/assets\/item-new-tag\.png/);
   assert.doesNotMatch(html + css, /figma\.com\/api\/mcp\/asset/);
 });
+
+test('exchange success lifecycle is wired to five-second item deadlines', () => {
+  assert.match(html, /const NEW_TAG_DURATION_MS = 5000;/);
+  assert.match(html, /item\.newUntil = Date\.now\(\) \+ NEW_TAG_DURATION_MS;/);
+  assert.match(
+    html,
+    /ITEMS\[category\] = promoteItemById\(ITEMS\[category\], item\.id\);/,
+  );
+  assert.match(html, /showExchangeSuccessTip\(category, item\.id\);/);
+  assert.match(
+    html,
+    /if \(card\.dataset\.itemId === latestExchangeItemId\) hideExchangeSuccessTip\(\);/,
+  );
+});
+
+test(
+  'a real exchange promotes the card and expires the success feedback after five seconds',
+  { timeout: 15000 },
+  async () => {
+    const browser = await chromium.launch({ headless: true });
+
+    try {
+      const page = await browser.newPage({ viewport: { width: 394, height: 852 } });
+      await page.goto(pathToFileURL(path.join(root, 'reading-hut.html')).href);
+
+      await page.locator('.room-action-bag').click();
+      await page.waitForTimeout(450);
+      await page.locator('.bag-item[data-item-id="wood-floor"]').evaluate((card) => card.click());
+      await page.locator('.exchange-confirm').click();
+
+      assert.equal(await page.locator('.room-star-count').textContent(), '10');
+      assert.equal(await page.locator('.bag-item').first().getAttribute('data-item-id'), 'wood-floor');
+      assert.equal(await page.locator('.bag-item').first().getAttribute('data-state'), 'on');
+      assert.equal(await page.locator('.bag-item-new').count(), 1);
+      assert.equal(await page.locator('.exchange-success-tip').getAttribute('aria-hidden'), 'false');
+      assert.match(await page.locator('.exchange-success-tip').textContent(), /刚刚兑换的家具/);
+
+      await page.waitForTimeout(5100);
+
+      assert.equal(await page.locator('.bag-item-new').count(), 0);
+      assert.equal(await page.locator('.exchange-success-tip').getAttribute('aria-hidden'), 'true');
+    } finally {
+      await browser.close();
+    }
+  },
+);

@@ -147,15 +147,15 @@
       (function () {
         const ITEMS = {
           furniture: [
-            { id: 'reading-rug', img: './assets/item-reading-rug-on.png', imgOff: './assets/item-reading-rug-off.png', name: '阅读地毯', stars: 10, unlocked: false, isNew: false, href: './placement-video.html' },
-            { id: 'wood-floor',  img: './assets/item-wood-floor-on.png',  imgOff: './assets/item-wood-floor-off.png',  name: '木地板',   stars: 20, unlocked: false, isNew: false, href: './placement-video.html' },
-            { id: 'bookshelf',   img: './assets/bag-bookshelf.png',       imgOff: './assets/bag-bookshelf-off.png',    name: '小书架',   stars: 45, unlocked: false, isNew: false, href: './placement-video.html' },
+            { id: 'reading-rug', img: './assets/item-reading-rug-on.png', imgOff: './assets/item-reading-rug-off.png', name: '阅读地毯', stars: 10, unlocked: false, newUntil: 0, href: './placement-video.html' },
+            { id: 'wood-floor',  img: './assets/item-wood-floor-on.png',  imgOff: './assets/item-wood-floor-off.png',  name: '木地板',   stars: 20, unlocked: false, newUntil: 0, href: './placement-video.html' },
+            { id: 'bookshelf',   img: './assets/bag-bookshelf.png',       imgOff: './assets/bag-bookshelf-off.png',    name: '小书架',   stars: 45, unlocked: false, newUntil: 0, href: './placement-video.html' },
           ],
           decoration: [
-            { id: 'plant',        img: './assets/item-plant-on.png',        imgOff: './assets/item-plant-off.png',        name: '小绿植',     stars: 10, unlocked: false, isNew: false, href: null },
-            { id: 'star-sticker', img: './assets/item-star-sticker-on.png', imgOff: './assets/item-star-sticker-off.png', name: '星星墙贴',   stars: 10, unlocked: false, isNew: false, href: null },
-            { id: 'doll',         img: './assets/item-doll-on.png',         imgOff: './assets/item-doll-off.png',         name: '雪梨玩偶',   stars: 15, unlocked: false, isNew: false, href: null },
-            { id: 'story-wall',   img: './assets/item-story-wall-on.png',   imgOff: './assets/item-story-wall-off.png',   name: '故事背景墙', stars: 10, unlocked: false, isNew: false, href: null },
+            { id: 'plant',        img: './assets/item-plant-on.png',        imgOff: './assets/item-plant-off.png',        name: '小绿植',     stars: 10, unlocked: false, newUntil: 0, href: null },
+            { id: 'star-sticker', img: './assets/item-star-sticker-on.png', imgOff: './assets/item-star-sticker-off.png', name: '星星墙贴',   stars: 10, unlocked: false, newUntil: 0, href: null },
+            { id: 'doll',         img: './assets/item-doll-on.png',         imgOff: './assets/item-doll-off.png',         name: '雪梨玩偶',   stars: 15, unlocked: false, newUntil: 0, href: null },
+            { id: 'story-wall',   img: './assets/item-story-wall-on.png',   imgOff: './assets/item-story-wall-off.png',   name: '故事背景墙', stars: 10, unlocked: false, newUntil: 0, href: null },
           ],
         };
 
@@ -170,15 +170,21 @@
         const hotspot = document.querySelector('.placement-hotspot');
         const roomTip = document.querySelector('.room-tip');
         const studyTip = document.querySelector('.study-tip');
+        const successTip = document.querySelector('.exchange-success-tip');
         const roomStars = document.querySelector('.room-stars');
         const starCount = document.querySelector('.room-star-count');
         const exchangeOverlay = document.querySelector('.exchange-overlay');
         const dialog = document.querySelector('.exchange-dialog');
         const confirmExchangeBtn = document.querySelector('.exchange-confirm');
         const goPlanBtn = document.querySelector('.exchange-go-plan');
-        const { getExchangeOutcome } = window.ReadingHutExchange;
+        const { getExchangeOutcome, promoteItemById } = window.ReadingHutExchange;
+        const NEW_TAG_DURATION_MS = 5000;
+        const newTagTimers = new Map();
         let starBalance = Number(starCount.textContent);
         let currentExchangeItem = null;
+        let currentExchangeCategory = null;
+        let successTipTimer = null;
+        let latestExchangeItemId = null;
         const DRAG_THRESHOLD = 6;
         const dragState = {
           pointerId: null,
@@ -219,7 +225,7 @@
             thumb.alt = item.name;
             card.appendChild(thumb);
 
-            if (item.isNew) {
+            if (item.newUntil > Date.now()) {
               var newTag = document.createElement('img');
               newTag.className = 'bag-item-new';
               newTag.src = './assets/item-new-tag.png';
@@ -331,6 +337,48 @@
           if (thumb) thumb.src = item.img;
         }
 
+        function hideExchangeSuccessTip() {
+          if (successTipTimer !== null) {
+            window.clearTimeout(successTipTimer);
+            successTipTimer = null;
+          }
+          successTip.classList.remove('is-visible');
+          successTip.setAttribute('aria-hidden', 'true');
+          latestExchangeItemId = null;
+        }
+
+        function showExchangeSuccessTip(category, itemId) {
+          if (successTipTimer !== null) window.clearTimeout(successTipTimer);
+          const itemType = category === 'decoration' ? '装饰' : '家具';
+          latestExchangeItemId = itemId;
+          successTip.textContent = '已经兑换成功啦~！快去点击刚刚兑换的' + itemType + '放置吧！';
+          successTip.classList.add('is-visible');
+          successTip.setAttribute('aria-hidden', 'false');
+          successTipTimer = window.setTimeout(function () {
+            successTipTimer = null;
+            successTip.classList.remove('is-visible');
+            successTip.setAttribute('aria-hidden', 'true');
+            latestExchangeItemId = null;
+          }, NEW_TAG_DURATION_MS);
+        }
+
+        function scheduleNewTagExpiry(category, item) {
+          const timerKey = category + ':' + item.id;
+          const existingTimer = newTagTimers.get(timerKey);
+          if (existingTimer !== undefined) window.clearTimeout(existingTimer);
+
+          const remaining = Math.max(0, item.newUntil - Date.now());
+          const timer = window.setTimeout(function () {
+            item.newUntil = 0;
+            newTagTimers.delete(timerKey);
+            if (panel.dataset.category !== category) return;
+            const card = itemList.querySelector('.bag-item[data-item-id="' + item.id + '"]');
+            const newTag = card && card.querySelector('.bag-item-new');
+            if (newTag) newTag.remove();
+          }, remaining);
+          newTagTimers.set(timerKey, timer);
+        }
+
         function populateExchangeDialog(item, outcome) {
           dialog.querySelectorAll('.exchange-item-name').forEach(function (node) {
             node.textContent = item.name;
@@ -349,8 +397,9 @@
           });
         }
 
-        function openExchangeDialog(item) {
+        function openExchangeDialog(item, category) {
           currentExchangeItem = item;
+          currentExchangeCategory = category;
           const outcome = getExchangeOutcome(starBalance, item.stars);
           dialog.dataset.mode = outcome.canAfford ? 'sufficient' : 'insufficient';
           dialog.setAttribute('aria-label', outcome.canAfford ? '确认兑换' : '星星不足');
@@ -364,15 +413,17 @@
           exchangeOverlay.classList.remove('is-open');
           exchangeOverlay.setAttribute('aria-hidden', 'true');
           currentExchangeItem = null;
+          currentExchangeCategory = null;
         }
 
         itemList.addEventListener('click', function (e) {
           const card = e.target.closest('.bag-item');
           if (!card) return;
+          if (card.dataset.itemId === latestExchangeItemId) hideExchangeSuccessTip();
           const item = findItem(card.dataset.category, card.dataset.itemId);
           if (!item || item.unlocked) return;
           e.preventDefault();
-          openExchangeDialog(item);
+          openExchangeDialog(item, card.dataset.category);
         });
 
         dialog.querySelectorAll('.exchange-cancel').forEach(function (button) {
@@ -382,16 +433,23 @@
         confirmExchangeBtn.addEventListener('click', function () {
           if (!currentExchangeItem) return;
           const item = currentExchangeItem;
+          const category = currentExchangeCategory;
           const outcome = getExchangeOutcome(starBalance, item.stars);
           if (!outcome.canAfford) {
-            openExchangeDialog(item);
+            openExchangeDialog(item, category);
             return;
           }
           starBalance = outcome.remaining;
           item.unlocked = true;
+          item.newUntil = Date.now() + NEW_TAG_DURATION_MS;
           updateTopStarBalance();
           updateUnlockedCard(item);
+          ITEMS[category] = promoteItemById(ITEMS[category], item.id);
+          renderItems(category);
+          itemList.scrollLeft = 0;
+          scheduleNewTagExpiry(category, item);
           closeExchangeDialog();
+          showExchangeSuccessTip(category, item.id);
         });
 
         goPlanBtn.addEventListener('click', function (e) {
@@ -414,6 +472,7 @@
         });
 
         function closeBag() {
+          hideExchangeSuccessTip();
           page.classList.remove('bag-open');
           panel.setAttribute('aria-hidden', 'true');
           overlay.setAttribute('aria-hidden', 'true');
