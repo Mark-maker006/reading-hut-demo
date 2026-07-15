@@ -1,20 +1,22 @@
 # Figma Home Preview
 
-Static HTML/CSS rebuild for Figma Frame 40.
+Static HTML/CSS previews for the active reading-game flow.
 
 Source Figma file:
 https://www.figma.com/design/mL71d1LBLALLgYOvp5f9yA/%E6%82%A6%E8%AF%BB%E5%B0%8F%E8%BE%BE%E4%BA%BA-to-%E5%8D%95%E8%AF%8D%E7%8E%8B--%E5%A4%9A%E5%AD%A9%E5%AD%90%E7%AE%A1%E7%90%86?node-id=149-1410&m=dev
 
-Implemented scope:
-- `index.html` maps to Frame 40.
-- The design source frame is `750 x 1624`; the preview frame is implemented at iPhone 16 size `393 x 852`.
-- Complex visual assets use exported PNG files from `assets/frame40/` instead of CSS drawings.
-- Figma MCP asset exports were generated for:
-  - `149:1410` full Frame 40 screenshot/export
-  - `150:2102` hero/background subtree
-  - `147:1525` main content subtree
-  - `150:2055` bottom tab subtree
-  - `147:1455` weekly card subtree
+The primary preview viewport is `393 x 852`. Complex artwork is stored locally under `assets/`; the pages do not depend on temporary Figma asset URLs.
+
+## Active flow
+
+```text
+index.html
+  -> level-map.html
+      -> reading-hut.html
+          -> illustration-book.html
+          -> placement-video.html
+      -> achievement.html
+```
 
 ## Preview
 
@@ -30,8 +32,15 @@ Then open:
 http://localhost:4173/
 ```
 
-## Files
+## Project structure
 
-- `index.html` - static Frame 40 page structure.
-- `styles.css` - iPhone 16 static layout and visual styling.
-- `assets/frame40/` - exported Figma assets used by the page.
+- `index.html` / `styles.css` - plan home page.
+- `level-map.html` / `level-map.css` - scrollable level map.
+- `reading-hut.html` / `reading-hut.css` - reading room, reusable item cards, panels, and exchange interactions.
+- `illustration-book.html` / `illustration-book.css` / `illustration-book.js` - furniture and decoration catalog.
+- `placement-video.html` / `placement-video.css` / `placement-video.js` - placement-animation preview.
+- `achievement.html` / `achievement.css` - achievement preview.
+- `reading-hut-exchange.js` - testable exchange and item-order helpers.
+- `assets/` - local runtime artwork only.
+- `tests/` - layout, asset, interaction, and project-structure regression tests.
+- `docs/` - design specifications, implementation plans, and handoff notes.
