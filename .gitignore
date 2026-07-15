@@ -1,0 +1,16 @@
+node_modules/
+
+# Local server output
+*.log
+
+# Local Codex / agent workspace state
+.claude/
+.superpowers/
+
+# Visual comparison and one-off inspection artifacts
+ss-*.png
+_*.png
+_*.py
+_*.js
+_*.html
+

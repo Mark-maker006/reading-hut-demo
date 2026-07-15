@@ -1,0 +1,1029 @@
+:root {
+  --phone-w: 393px;
+  --phone-h: 852px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #7b7b7b;
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.hut-page {
+  position: relative;
+  width: min(100vw, var(--phone-w));
+  height: min(100vh, var(--phone-h));
+  margin: 0 auto;
+  overflow: hidden;
+  background: #2b2115;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.26);
+}
+
+.room-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+.room-topbar {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 8px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.room-back {
+  display: block;
+  width: 36px;
+  height: 37px;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.room-back img,
+.room-nameplate,
+.room-mascot {
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.room-back img {
+  width: 100%;
+  height: 100%;
+}
+
+.room-nameplate {
+  width: 137px;
+  height: 52px;
+}
+
+.room-stars {
+  position: absolute;
+  left: 279px;
+  top: 4px;
+  width: 94px;
+  height: 30px;
+  pointer-events: none;
+}
+
+.room-star-count {
+  position: absolute;
+  left: 15px;
+  top: 4.7px;
+  width: 67.59px;
+  height: 20.602px;
+  border: 0.723px solid #dc9d57;
+  color: #fff;
+  background: #46321a;
+  box-shadow: inset 0 0 0 0.361px #83531a;
+  font-family: "Alibaba Sans", "Segoe UI", sans-serif;
+  font-size: 17.349px;
+  font-weight: 700;
+  line-height: 19.4px;
+  text-align: center;
+}
+
+.room-star-icon,
+.room-star-plus {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.room-star-icon {
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.room-star-plus {
+  left: 71.08px;
+  top: 2.73px;
+  width: 22.92px;
+  height: 24.54px;
+}
+
+.room-tip {
+  position: absolute;
+  right: 112px;
+  bottom: 234px;
+  z-index: 3;
+  width: 236px;
+  padding: 10px 14px 11px;
+  border: 2px solid rgba(216, 160, 73, 0.95);
+  border-radius: 22px 22px 8px 22px;
+  color: #6a3c12;
+  background: linear-gradient(180deg, #fff7d7 0%, #ffe7a6 100%);
+  box-shadow: 0 7px 14px rgba(91, 52, 13, 0.18), inset 0 2px 0 rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: 0;
+  text-align: left;
+  pointer-events: none;
+  transform-origin: right center;
+  transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1), opacity 400ms ease;
+}
+
+.room-tip.is-hidden {
+  transform: translateX(calc(100% + 112px));
+  opacity: 0;
+}
+
+.room-tip::after {
+  position: absolute;
+  right: -10px;
+  bottom: 12px;
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(216, 160, 73, 0.95);
+  border-bottom: 2px solid rgba(216, 160, 73, 0.95);
+  background: #ffe7a6;
+  content: "";
+  transform: rotate(-16deg) skew(18deg, 18deg);
+}
+
+.study-tip {
+  position: absolute;
+  right: 112px;
+  bottom: 234px;
+  z-index: 3;
+  width: 236px;
+  padding: 10px 14px 11px;
+  border: 2px solid rgba(216, 160, 73, 0.95);
+  border-radius: 22px 22px 8px 22px;
+  color: #6a3c12;
+  background: linear-gradient(180deg, #fff7d7 0%, #ffe7a6 100%);
+  box-shadow: 0 7px 14px rgba(91, 52, 13, 0.18), inset 0 2px 0 rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.28;
+  letter-spacing: 0;
+  text-align: left;
+  pointer-events: none;
+  transform-origin: right center;
+  transform: translateX(calc(100% + 112px));
+  opacity: 0;
+  transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1), opacity 400ms ease;
+}
+
+.study-tip::after {
+  position: absolute;
+  right: -10px;
+  bottom: 12px;
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid rgba(216, 160, 73, 0.95);
+  border-bottom: 2px solid rgba(216, 160, 73, 0.95);
+  background: #ffe7a6;
+  content: "";
+  transform: rotate(-16deg) skew(18deg, 18deg);
+}
+
+.study-tip.is-visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.room-mascot {
+  position: absolute;
+  left: 236px;
+  top: 473px;
+  right: auto;
+  bottom: auto;
+  z-index: 3;
+  width: 147px;
+  height: 179px;
+  transform-origin: top left;
+  transform: translate(17px, 32px) scale(0.796, 0.799);
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.room-bottom-actions {
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 18px;
+  z-index: 4;
+  display: flex;
+  align-items: flex-end;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.room-action {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transform-origin: 50% 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.room-action img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.room-action-label {
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  z-index: 2;
+  width: 100%;
+  transform: translateX(-50%);
+  color: #5a3510;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 248, 213, 0.95), 0 0 4px rgba(255, 246, 184, 0.92);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.room-action-bag {
+  width: 78px;
+  height: 84px;
+}
+
+.room-action-bag .room-action-label,
+.room-action-decorations .room-action-label {
+  bottom: 6px;
+}
+
+.room-action-decorations {
+  width: 78px;
+  height: 84px;
+  margin-left: 6px;
+}
+
+.room-action-catalog {
+  width: 66px;
+  height: 71px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.room-action-store {
+  width: 68px;
+  height: 68px;
+}
+
+.room-action-store .room-action-label {
+  bottom: 0;
+  font-size: 11px;
+}
+
+.placement-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ghost-slot {
+  position: absolute;
+  display: block;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+}
+
+.ghost-bookshelf-slot {
+  left: 28px;
+  top: 473px;
+  width: 122.105px;
+  height: 145px;
+}
+
+.ghost-floor-overlay {
+  left: 0;
+  top: 341px;
+  width: 393px;
+  height: 511px;
+}
+
+.ghost-floor-overlay > img {
+  position: absolute;
+  left: -1.5px;
+  top: -1.5px;
+  width: 396px;
+  height: 512.542px;
+}
+
+.ghost-rug-slot {
+  left: 165px;
+  top: 436px;
+  width: 186px;
+  height: 140px;
+}
+
+.ghost-rug-item {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 182px;
+  height: 134px;
+  object-fit: fill;
+  opacity: 0.3;
+}
+
+.ghost-rug-outline {
+  position: absolute;
+  left: 0.5px;
+  top: 0.5px;
+  width: 185px;
+  height: 139px;
+}
+
+.ghost-plant-slot {
+  left: 28px;
+  top: 221px;
+  width: 42.705px;
+  height: 52.047px;
+  overflow: hidden;
+}
+
+.ghost-plant-item {
+  position: absolute;
+  left: 1.012px;
+  top: 1.52px;
+  width: 40.398px;
+  height: 49.07px;
+  object-fit: fill;
+  opacity: 0.6;
+}
+
+.ghost-plant-outline {
+  position: absolute;
+  left: 0;
+  top: 1.14px;
+  width: 42.705px;
+  height: 50.52px;
+}
+
+.ghost-doll-slot {
+  left: 71px;
+  top: 226px;
+  width: 38px;
+  height: 46.9063px;
+}
+
+.ghost-story-wall-slot {
+  left: 147px;
+  top: 181px;
+  width: 90px;
+  height: 80px;
+}
+
+.ghost-star-sticker-slot {
+  left: 240px;
+  top: 110px;
+  width: 127.541862px;
+  height: 88.441437px;
+}
+
+.ghost-star-sticker-item {
+  position: absolute;
+  left: 0.930967px;
+  top: 0.620642px;
+  width: 125.416077px;
+  height: 86.547455px;
+  object-fit: fill;
+  opacity: 0.5;
+}
+
+.ghost-star-sticker-outline {
+  position: absolute;
+  left: -0.108px;
+  top: -0.07px;
+  width: 127.444px;
+  height: 88.3348px;
+}
+
+.placement-hotspot {
+  position: absolute;
+  left: 28px;
+  top: 473px;
+  width: 122.105px;
+  height: 145px;
+  z-index: 1;
+  display: block;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.placement-hotspot:focus-visible {
+  outline: 3px solid rgba(255, 225, 80, 0.8);
+  outline-offset: 2px;
+}
+
+.bag-no-transition .bag-panel,
+.bag-no-transition .bag-overlay {
+  transition: none;
+}
+
+/* ── bag panel overlay ── */
+
+.bag-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+.bag-open .bag-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bag-panel {
+  position: absolute;
+  left: 15px;
+  bottom: 16px;
+  z-index: 8;
+  width: 362px;
+  height: 192px;
+  transform: translateY(calc(100% + 16px));
+  transition: transform 400ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.bag-open .bag-panel {
+  transform: translateY(0);
+}
+
+.bag-panel-bg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ── item list scrollable area ── */
+
+.bag-item-list {
+  position: absolute;
+  top: 47px;
+  left: 10px;
+  width: 343px;
+  height: 126px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.bag-item-list.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.bag-item-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── single item ── */
+
+.bag-item {
+  flex: 0 0 87px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.bag-item-card {
+  position: relative;
+  width: 87px;
+  height: 126px;
+  overflow: visible;
+}
+
+.bag-item-card-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 装饰类物品使用通用框；家具类按 Figma 节点分别覆盖。 */
+.bag-item-thumb {
+  position: absolute;
+  top: 24px;
+  left: 9px;
+  width: 69px;
+  height: 68px;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+  pointer-events: none;
+}
+
+.bag-item[data-item-id="reading-rug"] .bag-item-thumb {
+  left: 10px;
+  top: 29px;
+  width: 68px;
+  height: 50px;
+}
+
+.bag-item[data-item-id="wood-floor"] .bag-item-thumb {
+  left: 9px;
+  top: 28.5px;
+  width: 70px;
+  height: 47px;
+}
+
+.bag-item[data-item-id="bookshelf"] .bag-item-thumb {
+  left: 13px;
+  top: 20px;
+  width: 59px;
+  height: 70px;
+}
+
+.bag-item[data-item-id="plant"] .bag-item-thumb {
+  left: 14px;
+  top: 18px;
+  width: 58px;
+  height: 70px;
+}
+
+.bag-item[data-item-id="star-sticker"] .bag-item-thumb {
+  left: 7px;
+  top: 29px;
+  width: 70px;
+  height: 48px;
+}
+
+.bag-item[data-item-id="doll"] .bag-item-thumb {
+  left: 16px;
+  top: 19px;
+  width: 54px;
+  height: 70px;
+  transform: scaleX(-1);
+}
+
+.bag-item[data-item-id="story-wall"] .bag-item-thumb {
+  left: 8px;
+  top: 25px;
+  width: 70px;
+  height: 62px;
+  transform: scaleX(-1);
+}
+
+/* 星数 + 星星：右上角 */
+.bag-item-star-row {
+  position: absolute;
+  top: 6px;
+  left: 52px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+.bag-item-star-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #52350f;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.bag-item-star-icon {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+/* NEW tag：左上角 */
+.bag-item-new {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 29.523px;
+  height: 22.605px;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* 名字：卡片内部底部居中 */
+.bag-item-name {
+  position: absolute;
+  top: 98px;
+  left: 0;
+  right: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #52350f;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  pointer-events: none;
+  user-select: none;
+}
+
+.bag-item:focus-visible .bag-item-card {
+  outline: 3px solid rgba(255, 225, 80, 0.8);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.bag-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bag-close:focus-visible {
+  outline: 3px solid rgba(255, 225, 80, 0.8);
+  outline-offset: 2px;
+}
+
+.bag-open .room-mascot {
+  transform: none;
+}
+
+.bag-open .room-tip,
+.bag-open .study-tip {
+  display: none;
+}
+
+.room-back:focus-visible,
+.room-action:focus-visible {
+  outline: 3px solid rgba(255, 225, 80, 0.8);
+  outline-offset: 2px;
+}
+
+/* ── star exchange dialog (Figma 219:1899 / 219:1905) ── */
+
+.exchange-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.exchange-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.exchange-dialog {
+  position: relative;
+  flex: 0 0 auto;
+  width: 341px;
+  height: 446px;
+  color: #734813;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+.exchange-dialog-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.exchange-dialog-bg img {
+  position: absolute;
+  display: block;
+  height: 110.99%;
+  left: -5.65%;
+  max-width: none;
+  top: -6.5%;
+  width: 217.74%;
+}
+
+.exchange-mode {
+  position: absolute;
+  display: none;
+}
+
+.exchange-dialog[data-mode="sufficient"] .exchange-mode-sufficient,
+.exchange-dialog[data-mode="insufficient"] .exchange-mode-insufficient {
+  display: block;
+}
+
+.exchange-mode-sufficient {
+  left: 40px;
+  top: 31px;
+  width: 262px;
+  height: 382px;
+}
+
+.exchange-mode-insufficient {
+  left: 40px;
+  top: 32px;
+  width: 262px;
+  height: 382px;
+}
+
+.exchange-sufficient-title,
+.exchange-insufficient-title {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 262px;
+  height: 37px;
+  margin: 0;
+  color: #734813;
+  font-family: "Alibaba Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 37px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.exchange-insufficient-title .exchange-missing-value {
+  color: #db5e05;
+  font-size: 32px;
+}
+
+.exchange-preview {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exchange-sufficient-preview {
+  left: 48px;
+  top: 52px;
+  width: 166px;
+  height: 122px;
+}
+
+.exchange-insufficient-preview {
+  left: 0;
+  top: 47px;
+  width: 262px;
+  height: 138px;
+}
+
+.exchange-preview-image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.exchange-details {
+  position: absolute;
+  left: 0;
+  width: 262px;
+}
+
+.exchange-sufficient-details {
+  left: 0;
+  top: 189px;
+  width: 262px;
+  height: 132px;
+}
+
+.exchange-insufficient-details {
+  left: 0;
+  top: 195px;
+  width: 262px;
+  height: 131px;
+}
+
+.exchange-detail-row {
+  position: absolute;
+  left: 0;
+  width: 262px;
+  border-top: 1px dashed rgba(115, 72, 19, 0.3);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+  white-space: nowrap;
+}
+
+.exchange-price-row {
+  top: 0;
+  height: 38px;
+}
+
+.exchange-price-label {
+  position: absolute;
+  left: 35px;
+  top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+}
+
+.exchange-price-label img {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.exchange-price-value {
+  position: absolute;
+  left: 139px;
+  top: 7px;
+}
+
+.exchange-balance-row {
+  top: 47px;
+  height: 33px;
+}
+
+.exchange-balance-row > .exchange-detail-label {
+  position: absolute;
+  left: 75px;
+  top: 12px;
+}
+
+.exchange-balance-group {
+  position: absolute;
+  left: 134px;
+  top: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 11px;
+}
+
+.exchange-number {
+  color: #db5e05;
+  font-family: "Alibaba Sans", "Segoe UI", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0.3px;
+}
+
+.exchange-remaining-row {
+  top: 89px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  height: 43px;
+  padding: 10px 22px 12px 41px;
+  border-bottom: 1px dashed rgba(115, 72, 19, 0.3);
+}
+
+.exchange-plan-row {
+  top: 89px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 10px 22px 12px 41px;
+  border-bottom: 1px dashed rgba(115, 72, 19, 0.3);
+  font-size: 14px;
+  letter-spacing: 0.14px;
+}
+
+.exchange-actions {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exchange-sufficient-actions {
+  left: 0;
+  top: 336px;
+  width: 262px;
+  height: 46px;
+}
+
+.exchange-insufficient-actions {
+  left: 0;
+  top: 336px;
+  width: 262px;
+  height: 46px;
+}
+
+.exchange-button {
+  position: relative;
+  flex: 0 0 auto;
+  border: 1px solid #5c7107;
+  border-radius: 15px;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.2px;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 2px 1.2px rgba(221, 194, 143, 0.49);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.exchange-button-secondary {
+  width: 123px;
+  height: 44px;
+  color: #648507;
+  background: #fde7bd;
+  box-shadow: 0 2px 1.2px rgba(221, 194, 143, 0.49), inset 0 -2px 0 #e5bf7a;
+}
+
+.exchange-button-primary {
+  width: 127px;
+  height: 46px;
+  color: #fff;
+  background: #a1c019;
+  box-shadow:
+    0 2px 1.2px rgba(221, 194, 143, 0.49),
+    inset 0 -1px 0 #536914,
+    inset 0 1px 0 #dee246,
+    inset 0 -2px 0 #728808,
+    inset 0 2px 0 rgba(215, 219, 48, 0.77);
+}
+
+.exchange-button:focus-visible {
+  outline: 3px solid rgba(255, 225, 80, 0.92);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-mascot {
+    transition: none;
+  }
+}
+
+@media (max-width: 392px) {
+  .bag-panel {
+    left: 3.8168%;
+    bottom: 1.8779%;
+    width: 92.111%;
+    height: auto;
+    aspect-ratio: 362 / 192;
+  }
+}

@@ -1,0 +1,464 @@
+:root {
+  --phone-w: 393px;
+  --phone-h: 852px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #7b7b7b;
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+}
+
+.catalog-page {
+  position: relative;
+  width: min(100vw, var(--phone-w));
+  height: min(100dvh, var(--phone-h));
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 26%);
+}
+
+/* ── 背景图 ─────────────────────────────────────── */
+/* image 1: center x=50%+3px, y=center, w=479, h=852 */
+.catalog-bg {
+  position: absolute;
+  left: calc(50% + 3px - 479px / 2);
+  top: 0;
+  width: 479px;
+  height: 852px;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── IP 角色 ────────────────────────────────────── */
+/* inset: top=17.37% right=6.36% bottom=64.79% left=62.85%  => 393×852 */
+.catalog-ip {
+  position: absolute;
+  left: calc(100% * 0.6285);
+  top: calc(100% * 0.1737);
+  right: calc(100% * 0.0636);
+  bottom: calc(100% * 0.6479);
+  pointer-events: none;
+  user-select: none;
+}
+
+.catalog-ip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── 顶部栏 ─────────────────────────────────────── */
+/* Frame: left=12, top=0, w=369, h=63 */
+.catalog-topbar {
+  position: absolute;
+  left: calc(100% * 12 / 393);
+  top: 0;
+  width: calc(100% * 369 / 393);
+  height: calc(100% * 63 / 852);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 返回按钮: left=0, top=15, w=36, h=37 */
+.catalog-back {
+  position: absolute;
+  left: 0;
+  top: calc(100% * 15 / 63);
+  width: calc(100% * 36 / 369);
+  height: calc(100% * 37 / 63);
+  pointer-events: auto;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+}
+
+.catalog-back img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.catalog-back:focus-visible {
+  outline: 3px solid rgb(255 225 80 / 80%);
+  outline-offset: 2px;
+}
+
+/* 标签栏背景: aspect-[403/110], left=14.09% right=23.31%, top=50% */
+.catalog-labelbar {
+  position: absolute;
+  left: 14.09%;
+  right: 23.31%;
+  top: 50%;
+  transform: translateY(-50%);
+  aspect-ratio: 403 / 110;
+  overflow: hidden;
+}
+
+.labelbar-img {
+  position: absolute;
+  width: 169.4%;
+  height: 930.91%;
+  left: -30.11%;
+  top: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 星星徽章: aspect-[55/24], left=85.09% right=0, top=50%+2.5px */
+.catalog-star-badge {
+  position: absolute;
+  left: 85.09%;
+  right: 0;
+  top: calc(50% + 2.5px);
+  transform: translateY(-50%);
+  aspect-ratio: 55 / 24;
+  overflow: hidden;
+}
+
+.star-badge-img {
+  position: absolute;
+  width: 711.46%;
+  height: 2443.64%;
+  left: -570.6%;
+  top: -95.83%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── 收集横幅 ───────────────────────────────────── */
+/* aspect-[121/34], abs left=106, abs top=148.5 */
+/* left in page = topbar-left(12) + 25.47%*369 = 12+94 = 106 */
+.catalog-collect-banner {
+  position: absolute;
+  left: calc(100% * 106 / 393);
+  top: calc(100% * 148.5 / 852);
+  width: calc(100% * 181 / 393);
+  aspect-ratio: 121 / 34;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.collect-banner-img {
+  position: absolute;
+  width: 323.39%;
+  height: 1724.92%;
+  left: -77.81%;
+  top: -246.21%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── 卡片区域 ───────────────────────────────────── */
+/* Frame 25: left=16, top=262, w=361, h=526 */
+.catalog-card {
+  position: absolute;
+  left: calc(100% * 16 / 393);
+  top: calc(100% * 262 / 852);
+  width: calc(100% * 361 / 393);
+  height: calc(100% * 526 / 852);
+}
+
+/* Object 卡片框: -translate-x-1/2, left=50%, aspect-[402/482], top=0 bottom=0 */
+.catalog-object {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  aspect-ratio: 402 / 482;
+  height: calc(100% * 432 / 526);
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── 内容面板 ───────────────────────────────────── */
+/* Frame 22 furniture: left=40, top=22, w=274, h=251 (in card 361×432) */
+/* Frame 22 decorate:  left=40, top=22, w=266, h=340 */
+.catalog-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: calc(100% * 432 / 526);
+  display: none;
+  pointer-events: none;
+}
+
+.catalog-content.is-active {
+  display: block;
+}
+
+/* ── 家具内容 ───────────────────────────────────── */
+/* Frame 22: left=40, top=22, w=274, h=251 in card(361×432) */
+.furn-frame {
+  position: absolute;
+  left: calc(100% * 40 / 361);
+  top: calc(100% * 22 / 432);
+  width: calc(100% * 274 / 361);
+  height: calc(100% * 251 / 432);
+}
+
+/* 家具标题: aspect-[202/47], left=0, right=48.91%, top-[calc(50%-109px)] in furn-frame(274×251) */
+.furn-title {
+  position: absolute;
+  left: 0;
+  right: 48.91%;
+  top: calc(50% - 109px);
+  transform: translateY(-50%);
+  aspect-ratio: 202 / 47;
+  overflow: hidden;
+}
+
+.furn-title-img {
+  position: absolute;
+  width: 337.95%;
+  height: 2178.72%;
+  left: -213.53%;
+  top: -748.94%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Frame 21: left=14, top=37, w=260, h=214 in furn-frame */
+.furn-grid {
+  position: absolute;
+  left: calc(100% * 14 / 274);
+  top: calc(100% * 37 / 251);
+  width: calc(100% * 260 / 274);
+  height: calc(100% * 214 / 251);
+}
+
+/* 每个格子: aspect-[112/150], 在 furn-grid(260×214) 内 */
+/* row center y = 214*50% ± 59 => 48 or 166, cell top = cy - h/2 */
+/* col x: 0, 36.15%, 72.31% */
+.furn-cell {
+  position: absolute;
+  aspect-ratio: 112 / 150;
+  width: calc(100% * 112 / 336); /* 3列均分 260/3≈86.7, 但 Figma 用 right-[72.31%] => 260*0.2769=72px */
+  width: 27.69%; /* 260*0.2769/260 */
+  overflow: hidden;
+}
+
+/* 精确宽度：right-[72.31%] => left=0 right=72.31% => width=27.69% */
+.furn-cell { width: 27.69%; }
+
+/* row1 center y=48 => top = 48/214 = 22.43% (center), translateY(-50%) */
+/* row2 center y=166 => top = 166/214 = 77.57% */
+.furn-cell--r1c1 { left: 0;      top: calc(48px / 214px * 100%); transform: translateY(-50%); }
+.furn-cell--r1c2 { left: 36.15%; top: calc(48px / 214px * 100%); transform: translateY(-50%); }
+.furn-cell--r1c3 { left: 72.31%; top: calc(48px / 214px * 100%); transform: translateY(-50%); }
+.furn-cell--r2c1 { left: 0;      top: calc(166px / 214px * 100%); transform: translateY(-50%); }
+.furn-cell--r2c2 { left: 36.15%; top: calc(166px / 214px * 100%); transform: translateY(-50%); }
+
+/* r2c3: aspect-[63/74], left=72.31% right=0 */
+.furn-cell--r2c3 {
+  left: 71.92%;
+  right: 0;
+  width: auto;
+  top: calc(166px / 214px * 100%);
+  transform: translateY(-50%);
+  aspect-ratio: 63 / 74;
+}
+
+/* Sprite crops for each cell (sprite rendered ~439×659 per cell ~72×96) */
+/* CSS: h-[682.67%] w-[609.52%] with varying left/top offsets */
+.furn-cell-img {
+  position: absolute;
+  width: 609.52%;
+  height: 682.67%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.furn-cell--r1c1 .furn-cell-img { left: -383.33%; top: -273.33%; }
+.furn-cell--r1c2 .furn-cell-img { left: -496.17%; top: -273.33%; }
+.furn-cell--r1c3 .furn-cell-img { left: -383.33%; top: -380.86%; }
+.furn-cell--r2c1 .furn-cell-img { left: -493.52%; top: -379.86%; }
+.furn-cell--r2c2 .furn-cell-img { left: -489.53%; top: -483.41%; }
+
+/* r2c3 special: aspect-[63/74], CSS: h-[885.62%] w-[696.6%] */
+.furn-cell--r2c3 .furn-cell-img {
+  width: 696.6%;
+  height: 885.62%;
+  left: -488%;
+  top: -761.68%;
+}
+
+/* ── 装饰内容 ───────────────────────────────────── */
+/* Frame 22 decorate: left=40, top=22, w=266, h=340 in card(361×432) */
+.deco-frame {
+  position: absolute;
+  left: calc(100% * 40 / 361);
+  top: calc(100% * 22 / 432);
+  width: calc(100% * 266 / 361);
+  height: calc(100% * 340 / 432);
+}
+
+/* 装饰标题: aspect-[218/46], left=0.75%, right=48.12%, top-[calc(50%-153.5px)] in deco-frame(266×340) */
+.deco-title {
+  position: absolute;
+  left: 0.75%;
+  right: 48.12%;
+  top: calc(50% - 153.5px);
+  transform: translateY(-50%);
+  aspect-ratio: 218 / 46;
+  overflow: hidden;
+}
+
+.deco-title img {
+  position: absolute;
+  width: 103.21%;
+  height: 161.33%;
+  left: -0.46%;
+  top: -28.49%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 装饰格子: -translate-x-1/2, left=calc(50%+4.36px), top=43.22px, w=257.275, h=296.551 */
+.deco-grid {
+  position: absolute;
+  left: calc(50% + 4.36px);
+  top: calc(100% * 43.22 / 340);
+  width: calc(100% * 257.275 / 266);
+  height: calc(100% * 296.551 / 340);
+  transform: translateX(-50%);
+}
+
+/* 装饰格子内的 9 个图片 (都从 ib-decorate-items.png 裁切) */
+/* 容器 257.275×296.551px */
+.deco-cell {
+  position: absolute;
+  overflow: hidden;
+}
+
+/* Row1 (top=0): h=87.818 */
+.deco-cell--r1c1 { left: 0;         top: 0;         width: calc(100% * 73.255 / 257.275); height: calc(100% * 87.818 / 296.551); }
+.deco-cell--r1c2 { left: calc(100% * 91.35 / 257.275);  top: 0; width: calc(100% * 73.255 / 257.275); height: calc(100% * 87.818 / 296.551); }
+.deco-cell--r1c3 { left: calc(100% * 182.7 / 257.275);  top: 0; width: calc(100% * 73.255 / 257.275); height: calc(100% * 87.818 / 296.551); }
+
+/* Row2 (top=105.47): h=89.142 */
+.deco-cell--r2c1 { left: 0;         top: calc(100% * 105.47 / 296.551); width: calc(100% * 73.255 / 257.275); height: calc(100% * 89.142 / 296.551); }
+.deco-cell--r2c2 { left: calc(100% * 89.58 / 257.275);  top: calc(100% * 105.47 / 296.551); width: calc(100% * 73.255 / 257.275); height: calc(100% * 89.142 / 296.551); }
+.deco-cell--r2c3 { left: calc(100% * 182.7 / 257.275);  top: calc(100% * 105.47 / 296.551); width: calc(100% * 73.255 / 257.275); height: calc(100% * 89.142 / 296.551); }
+
+/* Row3 (top=212.26): h=84.287 */
+.deco-cell--r3c1 { left: 0;         top: calc(100% * 212.26 / 296.551); width: calc(100% * 73.255 / 257.275); height: calc(100% * 84.287 / 296.551); }
+.deco-cell--r3c2 { left: calc(100% * 89.58 / 257.275);  top: calc(100% * 212.26 / 296.551); width: calc(100% * 74.579 / 257.275); height: calc(100% * 84.287 / 296.551); }
+.deco-cell--r3c3 { left: calc(100% * 182.7 / 257.275);  top: calc(100% * 212.26 / 296.551); width: calc(100% * 74.579 / 257.275); height: calc(100% * 84.287 / 296.551); }
+
+.deco-cell img {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Sprite crops for deco cells (from ib-decorate-items.png) */
+/* r1c1: h-[340.7%] left-[-40.36%] top-[-14.07%] w-[408.43%] */
+.deco-cell--r1c1 img { width: 408.43%; height: 340.7%;  left: -40.36%;  top: -14.07%; }
+.deco-cell--r1c2 img { width: 408.43%; height: 340.7%;  left: -154.12%; top: -14.07%; }
+.deco-cell--r1c3 img { width: 408.43%; height: 340.7%;  left: -267.03%; top: -14.07%; }
+.deco-cell--r2c1 img { width: 408.43%; height: 335.64%; left: -40.36%;  top: -121.23%; }
+.deco-cell--r2c2 img { width: 408.43%; height: 335.64%; left: -154.36%; top: -121.23%; }
+.deco-cell--r2c3 img { width: 408.43%; height: 335.64%; left: -266.55%; top: -121.23%; }
+.deco-cell--r3c1 img { width: 408.43%; height: 354.97%; left: -39.64%;  top: -240.18%; }
+.deco-cell--r3c2 img { width: 401.18%; height: 354.97%; left: -151.27%; top: -240.18%; }
+.deco-cell--r3c3 img { width: 401.18%; height: 354.97%; left: -262.99%; top: -240.18%; }
+
+/* ── 底部 tab 按钮 ──────────────────────────────── */
+/* Frame 24 abs: left=16+29=45, top=262+405=667, w=305, h=121 */
+.catalog-tabs {
+  position: absolute;
+  left: calc(100% * 45 / 393);
+  top: calc(100% * 667 / 852);
+  width: calc(100% * 305 / 393);
+  height: calc(100% * 121 / 852);
+  z-index: 2;
+}
+
+.tab-btn {
+  position: absolute;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  top: 50%;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+/* 左按钮: aspect-[139/123], left-0, right-[55.08%] => width=44.92% */
+.tab-btn:first-child {
+  left: 0;
+  right: 55.08%;
+  aspect-ratio: 139 / 123;
+}
+
+/* 右按钮: aspect-[150/137], left-[56.72%], right-0 */
+.tab-btn:last-child {
+  left: 56.72%;
+  right: 0;
+  aspect-ratio: 150 / 137;
+}
+
+/* 每个按钮内有两张图，分别是 active/inactive 状态 */
+.tab-btn .tab-img--on  { display: none;  }
+.tab-btn .tab-img--off { display: block; }
+
+.tab-btn.is-active .tab-img--on  { display: block; }
+.tab-btn.is-active .tab-img--off { display: none;  }
+
+.tab-btn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Tab 按钮用 sprite 裁切（家具页的 active/inactive 状态）*/
+/* 左按钮 active (家具页左btn): aspect-[139/123] */
+/* sprite rendered: w-[491.13%] h-[832.52%] left-[-19.66%] top-[-597.56%] */
+.tab-btn--sprite {
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-btn--sprite .tab-sprite-img {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 左按钮: active 用 sprite (家具页左侧激活态) */
+.tab-furn-l-on .tab-sprite-img  { width: 491.13%; height: 832.52%; left: -19.66%; top: -597.56%; }
+/* 左按钮: inactive 用 sprite (家具页左侧未激活态=装饰页左侧) */
+.tab-furn-l-off .tab-sprite-img { width: 491.13%; height: 832.52%; left: -19.66%; top: -597.56%; }
+
+/* 右按钮: active (装饰页右侧激活态) */
+/* 右按钮: inactive (家具页右侧未激活态) */
+/* sprite rendered: w-[507.5%] h-[832.52%] left-[-135%] top-[-597.56%] */
+.tab-furn-r-off .tab-sprite-img { width: 507.5%; height: 832.52%; left: -135%; top: -597.56%; }
+
+.tab-btn:focus-visible {
+  outline: 3px solid rgb(79 206 105 / 65%);
+  outline-offset: 2px;
+  border-radius: 8px;
+}

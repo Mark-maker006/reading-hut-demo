@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图鉴</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./illustration-book.css" />
+  </head>
+  <body>
+    <main class="catalog-page" aria-label="图鉴">
+
+      <!-- 背景图 -->
+      <img class="catalog-bg" src="./assets/ib-background.png" alt="" aria-hidden="true" />
+
+      <!-- IP 角色 -->
+      <div class="catalog-ip">
+        <img src="./assets/ib-ip.png" alt="" aria-hidden="true" />
+      </div>
+
+      <!-- 顶部栏 -->
+      <div class="catalog-topbar">
+        <a class="catalog-back" href="./reading-hut.html" aria-label="返回阅读小屋">
+          <img src="./assets/ib-back.png" alt="" aria-hidden="true" />
+        </a>
+        <!-- 标签栏背景 -->
+        <div class="catalog-labelbar">
+          <img src="./assets/ib-bg-sprite.png" class="labelbar-img" alt="" aria-hidden="true" />
+        </div>
+        <!-- 星星徽章 -->
+        <div class="catalog-star-badge">
+          <img src="./assets/ib-bg-sprite.png" class="star-badge-img" alt="" aria-hidden="true" />
+        </div>
+      </div>
+
+      <!-- 收集横幅（已收集 1/20） -->
+      <div class="catalog-collect-banner">
+        <img src="./assets/ib-bg-sprite.png" class="collect-banner-img" alt="" aria-hidden="true" />
+      </div>
+
+      <!-- 卡片区域 -->
+      <div class="catalog-card">
+        <img class="catalog-object" src="./assets/ib-object.png" alt="" aria-hidden="true" />
+
+        <!-- 家具图鉴内容（默认显示） -->
+        <div class="catalog-content is-active" data-tab="furniture" aria-label="家具图鉴">
+          <div class="furn-frame">
+            <!-- 家具标题 -->
+            <div class="furn-title">
+              <img src="./assets/ib-bg-sprite.png" class="furn-title-img" alt="家具图鉴" aria-hidden="true" />
+            </div>
+            <!-- 家具 3×2 格子 -->
+            <div class="furn-grid">
+              <div class="furn-cell furn-cell--r1c1">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+              <div class="furn-cell furn-cell--r1c2">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+              <div class="furn-cell furn-cell--r1c3">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+              <div class="furn-cell furn-cell--r2c1">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+              <div class="furn-cell furn-cell--r2c2">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+              <div class="furn-cell furn-cell--r2c3">
+                <img src="./assets/ib-bg-sprite.png" class="furn-cell-img" alt="" aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 装饰图鉴内容 -->
+        <div class="catalog-content" data-tab="decorate" aria-label="装饰图鉴">
+          <div class="deco-frame">
+            <!-- 装饰标题 -->
+            <div class="deco-title">
+              <img src="./assets/ib-decorate-title.png" alt="装饰图鉴" />
+            </div>
+            <!-- 装饰 3×3 格子 -->
+            <div class="deco-grid">
+              <div class="deco-cell deco-cell--r1c1"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r1c2"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r1c3"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r2c1"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r2c2"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r2c3"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r3c1"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r3c2"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+              <div class="deco-cell deco-cell--r3c3"><img src="./assets/ib-decorate-items.png" alt="" aria-hidden="true" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部 tab 按钮 -->
+      <div class="catalog-tabs">
+        <!-- 家具按钮（默认激活） -->
+        <button class="tab-btn is-active" data-target="furniture" aria-label="家具图鉴" aria-pressed="true">
+          <img class="tab-img--on"  src="./assets/ib-tab-furn-l.png"     alt="" aria-hidden="true" />
+          <img class="tab-img--off" src="./assets/ib-tab-decorate-l.png" alt="" aria-hidden="true" />
+        </button>
+        <!-- 装饰按钮 -->
+        <button class="tab-btn" data-target="decorate" aria-label="装饰图鉴" aria-pressed="false">
+          <img class="tab-img--on"  src="./assets/ib-tab-decorate-r.png" alt="" aria-hidden="true" />
+          <img class="tab-img--off" src="./assets/ib-tab-furn-r.png"     alt="" aria-hidden="true" />
+        </button>
+      </div>
+
+    </main>
+    <script src="./illustration-book.js"></script>
+  </body>
+</html>

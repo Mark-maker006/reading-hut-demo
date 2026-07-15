@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading Hut</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./reading-hut.css" />
+  </head>
+  <body>
+    <main class="hut-page" aria-label="Reading Hut">
+      <img class="room-bg" src="./assets/reading-room-background.png" alt="" aria-hidden="true" />
+
+      <section class="placement-stage" aria-label="Furniture placement preview">
+        <div class="ghost-slot ghost-floor-overlay" aria-hidden="true">
+          <img src="./assets/hut-ghost-floor.svg" alt="" />
+        </div>
+        <img class="ghost-slot ghost-bookshelf-slot" src="./assets/hut-ghost-bookshelf.png" alt="" aria-hidden="true" />
+        <div class="ghost-slot ghost-rug-slot" aria-hidden="true">
+          <img class="ghost-rug-item" src="./assets/item-reading-rug-off.png" alt="" />
+          <img class="ghost-rug-outline" src="./assets/hut-ghost-rug-outline.svg" alt="" />
+        </div>
+        <div class="ghost-slot ghost-plant-slot" aria-hidden="true">
+          <img class="ghost-plant-item" src="./assets/item-plant-off.png" alt="" />
+          <img class="ghost-plant-outline" src="./assets/hut-ghost-plant-outline.svg" alt="" />
+        </div>
+        <img class="ghost-slot ghost-doll-slot" src="./assets/hut-ghost-doll-off.png" alt="" aria-hidden="true" />
+        <img class="ghost-slot ghost-story-wall-slot" src="./assets/hut-ghost-story-wall-off.png" alt="" aria-hidden="true" />
+        <div class="ghost-slot ghost-star-sticker-slot" aria-hidden="true">
+          <img class="ghost-star-sticker-item" src="./assets/item-star-sticker-off.png" alt="" />
+          <img class="ghost-star-sticker-outline" src="./assets/hut-ghost-star-sticker-outline.svg" alt="" />
+        </div>
+        <a class="placement-hotspot" aria-label="Furniture placement area"></a>
+      </section>
+
+      <header class="room-topbar" aria-label="Room navigation">
+        <a class="room-back" href="./level-map.html" aria-label="Back to level map">
+          <img src="./assets/room-back-button.png" alt="" aria-hidden="true" />
+        </a>
+        <img class="room-nameplate" src="./assets/room-nameplate.png" alt="Reading Hut" />
+        <div class="room-stars" role="img" aria-label="30 stars">
+          <span class="room-star-count" aria-hidden="true">30</span>
+          <img class="room-star-icon" src="./assets/room-star-icon.svg" alt="" aria-hidden="true" />
+          <img class="room-star-plus" src="./assets/room-star-plus.png" alt="" aria-hidden="true" />
+        </div>
+      </header>
+
+      <div class="room-tip" aria-label="引导提示">快点击背包来放置你收集的家具吧~~！</div>
+      <div class="study-tip" aria-label="学习提示" aria-hidden="true">快去完成今天的学习任务吧！加油哦～</div>
+      <img class="room-mascot" src="./assets/hut-mascot.png" alt="" aria-hidden="true" />
+
+      <nav class="room-bottom-actions" aria-label="Room actions">
+        <button class="room-action room-action-bag" type="button" aria-label="Open bag">
+          <img src="./assets/room-button-bag.png" alt="" aria-hidden="true" />
+          <span class="room-action-label">家具</span>
+        </button>
+        <button class="room-action room-action-decorations" type="button" aria-label="Open decorations bag">
+          <img src="./assets/room-button-decorations-bag.png" alt="" aria-hidden="true" />
+          <span class="room-action-label">装饰</span>
+        </button>
+        <a class="room-action room-action-catalog" href="./illustration-book.html" aria-label="Open catalog">
+          <img src="./assets/room-button-catalog.png" alt="" aria-hidden="true" />
+          <span class="room-action-label">图鉴</span>
+        </a>
+      </nav>
+
+      <!-- bag panel (inline, animated) -->
+      <div class="bag-overlay" aria-hidden="true"></div>
+      <section class="bag-panel" aria-label="Furniture list" aria-hidden="true">
+        <img class="bag-panel-bg" src="./assets/bag-panel-furniture.png" alt="" aria-hidden="true" />
+        <div class="bag-item-list" role="list"></div>
+        <button class="bag-close" type="button" aria-label="关闭面板"></button>
+      </section>
+
+      <div class="exchange-overlay" aria-hidden="true">
+        <section class="exchange-dialog" role="dialog" data-mode="sufficient" aria-modal="true" aria-label="星星兑换">
+          <div class="exchange-dialog-bg" aria-hidden="true">
+            <img src="./assets/exchange-dialog-source.png" alt="" />
+          </div>
+
+          <div class="exchange-mode exchange-mode-sufficient">
+            <h2 class="exchange-sufficient-title">兑换<span class="exchange-item-name">阅读地毯</span>吗？</h2>
+            <div class="exchange-preview exchange-sufficient-preview">
+              <img class="exchange-preview-image" src="./assets/item-reading-rug-on.png" alt="" />
+            </div>
+            <div class="exchange-details exchange-sufficient-details">
+              <div class="exchange-detail-row exchange-price-row">
+                <span class="exchange-detail-label exchange-price-label">
+                  <img src="./assets/exchange-dialog-star.svg" alt="" aria-hidden="true" />
+                  <span>价格</span>
+                </span>
+                <strong class="exchange-number exchange-price-value">10</strong>
+              </div>
+              <div class="exchange-detail-row exchange-balance-row">
+                <span class="exchange-detail-label">当前有</span>
+                <span class="exchange-balance-group">
+                  <strong class="exchange-number exchange-balance-value">30</strong>
+                  <span>颗星星</span>
+                </span>
+              </div>
+              <div class="exchange-detail-row exchange-remaining-row">
+                <span class="exchange-detail-label">兑换后剩余</span>
+                <strong class="exchange-number exchange-remaining-value">20</strong>
+                <span>颗星星</span>
+              </div>
+            </div>
+            <div class="exchange-actions exchange-sufficient-actions">
+              <button class="exchange-button exchange-button-secondary exchange-cancel" type="button">再想想</button>
+              <button class="exchange-button exchange-button-primary exchange-confirm" type="button">确认兑换</button>
+            </div>
+          </div>
+
+          <div class="exchange-mode exchange-mode-insufficient">
+            <h2 class="exchange-insufficient-title">还差 <strong class="exchange-missing-value">15</strong> 颗星星</h2>
+            <div class="exchange-preview exchange-insufficient-preview">
+              <img class="exchange-preview-image" src="./assets/bag-bookshelf.png" alt="" />
+            </div>
+            <div class="exchange-details exchange-insufficient-details">
+              <div class="exchange-detail-row exchange-price-row">
+                <span class="exchange-detail-label exchange-price-label">
+                  <img src="./assets/exchange-dialog-star.svg" alt="" aria-hidden="true" />
+                  <span>价格</span>
+                </span>
+                <strong class="exchange-number exchange-price-value">45</strong>
+              </div>
+              <div class="exchange-detail-row exchange-balance-row">
+                <span class="exchange-detail-label">当前有</span>
+                <span class="exchange-balance-group">
+                  <strong class="exchange-number exchange-balance-value">30</strong>
+                  <span>颗星星</span>
+                </span>
+              </div>
+              <div class="exchange-detail-row exchange-plan-row">完成每日学习计划可以获得星星</div>
+            </div>
+            <div class="exchange-actions exchange-insufficient-actions">
+              <button class="exchange-button exchange-button-secondary exchange-cancel" type="button">暂不兑换</button>
+              <button class="exchange-button exchange-button-primary exchange-go-plan" type="button">去完成计划</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="./reading-hut-exchange.js"></script>
+    <script>
+      (function () {
+        const ITEMS = {
+          furniture: [
+            { id: 'reading-rug', img: './assets/item-reading-rug-on.png', imgOff: './assets/item-reading-rug-off.png', name: '阅读地毯', stars: 10, unlocked: false, isNew: false, href: './placement-video.html' },
+            { id: 'wood-floor',  img: './assets/item-wood-floor-on.png',  imgOff: './assets/item-wood-floor-off.png',  name: '木地板',   stars: 20, unlocked: false, isNew: false, href: './placement-video.html' },
+            { id: 'bookshelf',   img: './assets/bag-bookshelf.png',       imgOff: './assets/bag-bookshelf-off.png',    name: '小书架',   stars: 45, unlocked: false, isNew: false, href: './placement-video.html' },
+          ],
+          decoration: [
+            { id: 'plant',        img: './assets/item-plant-on.png',        imgOff: './assets/item-plant-off.png',        name: '小绿植',     stars: 10, unlocked: false, isNew: false, href: null },
+            { id: 'star-sticker', img: './assets/item-star-sticker-on.png', imgOff: './assets/item-star-sticker-off.png', name: '星星墙贴',   stars: 10, unlocked: false, isNew: false, href: null },
+            { id: 'doll',         img: './assets/item-doll-on.png',         imgOff: './assets/item-doll-off.png',         name: '雪梨玩偶',   stars: 15, unlocked: false, isNew: false, href: null },
+            { id: 'story-wall',   img: './assets/item-story-wall-on.png',   imgOff: './assets/item-story-wall-off.png',   name: '故事背景墙', stars: 10, unlocked: false, isNew: false, href: null },
+          ],
+        };
+
+        const page = document.querySelector('.hut-page');
+        const panel = document.querySelector('.bag-panel');
+        const panelBg = document.querySelector('.bag-panel-bg');
+        const itemList = document.querySelector('.bag-item-list');
+        const overlay = document.querySelector('.bag-overlay');
+        const furnitureBtn = document.querySelector('.room-action-bag');
+        const decorationsBtn = document.querySelector('.room-action-decorations');
+        const closeBtn = document.querySelector('.bag-close');
+        const hotspot = document.querySelector('.placement-hotspot');
+        const roomTip = document.querySelector('.room-tip');
+        const studyTip = document.querySelector('.study-tip');
+        const roomStars = document.querySelector('.room-stars');
+        const starCount = document.querySelector('.room-star-count');
+        const exchangeOverlay = document.querySelector('.exchange-overlay');
+        const dialog = document.querySelector('.exchange-dialog');
+        const confirmExchangeBtn = document.querySelector('.exchange-confirm');
+        const goPlanBtn = document.querySelector('.exchange-go-plan');
+        const { getExchangeOutcome } = window.ReadingHutExchange;
+        let starBalance = Number(starCount.textContent);
+        let currentExchangeItem = null;
+        const DRAG_THRESHOLD = 6;
+        const dragState = {
+          pointerId: null,
+          startX: 0,
+          startScrollLeft: 0,
+          didDrag: false,
+          suppressClick: false,
+        };
+
+        function renderItems(category) {
+          itemList.scrollLeft = 0;
+          itemList.innerHTML = '';
+          (ITEMS[category] || []).forEach(function (item) {
+            var el = document.createElement(item.href ? 'a' : 'div');
+            el.className = 'bag-item';
+            el.dataset.itemId = item.id || item.name;
+            el.dataset.category = category;
+            el.dataset.state = item.unlocked ? 'on' : 'off';
+            el.setAttribute('role', 'listitem');
+            if (item.href) {
+              el.href = item.href;
+              el.setAttribute('aria-label', item.name + ' ' + item.stars + '星');
+            }
+
+            var card = document.createElement('div');
+            card.className = 'bag-item-card';
+
+            var cardBg = document.createElement('img');
+            cardBg.className = 'bag-item-card-bg';
+            cardBg.src = './assets/item-card.png';
+            cardBg.alt = '';
+            cardBg.setAttribute('aria-hidden', 'true');
+            card.appendChild(cardBg);
+
+            var thumb = document.createElement('img');
+            thumb.className = 'bag-item-thumb';
+            thumb.src = item.unlocked ? item.img : item.imgOff;
+            thumb.alt = item.name;
+            card.appendChild(thumb);
+
+            if (item.isNew) {
+              var newTag = document.createElement('img');
+              newTag.className = 'bag-item-new';
+              newTag.src = './assets/item-new-tag.png';
+              newTag.alt = 'NEW';
+              card.appendChild(newTag);
+            }
+
+            el.appendChild(card);
+
+            var starRow = document.createElement('div');
+            starRow.className = 'bag-item-star-row';
+
+            var itemStarCount = document.createElement('span');
+            itemStarCount.className = 'bag-item-star-count';
+            itemStarCount.textContent = item.stars;
+            starRow.appendChild(itemStarCount);
+
+            var starIcon = document.createElement('img');
+            starIcon.className = 'bag-item-star-icon';
+            starIcon.src = './assets/item-star-tag.png';
+            starIcon.alt = '';
+            starIcon.setAttribute('aria-hidden', 'true');
+            starRow.appendChild(starIcon);
+
+            card.appendChild(starRow);
+
+            var name = document.createElement('span');
+            name.className = 'bag-item-name';
+            name.textContent = item.name;
+            card.appendChild(name);
+
+            el.appendChild(card);
+            itemList.appendChild(el);
+          });
+        }
+
+        function openPanel(category, animate) {
+          const isDecoration = category === 'decoration';
+          panelBg.src = isDecoration
+            ? './assets/bag-panel-decorative.png'
+            : './assets/bag-panel-furniture.png';
+          panel.dataset.category = category;
+          panel.setAttribute('aria-label', isDecoration ? '装饰列表' : '家具列表');
+          panel.setAttribute('aria-hidden', 'false');
+          overlay.setAttribute('aria-hidden', 'false');
+          renderItems(category);
+          if (!animate) {
+            page.classList.add('bag-no-transition');
+          }
+          page.classList.add('bag-open');
+          if (!animate) {
+            page.offsetHeight;
+            page.classList.remove('bag-no-transition');
+          }
+        }
+
+        function finishItemListDrag(e) {
+          if (dragState.pointerId !== e.pointerId) return;
+          dragState.suppressClick = e.type === 'pointerup' && dragState.didDrag;
+          dragState.pointerId = null;
+          itemList.classList.remove('is-dragging');
+        }
+
+        itemList.addEventListener('pointerdown', function (e) {
+          if (e.button !== 0) return;
+          dragState.pointerId = e.pointerId;
+          dragState.startX = e.clientX;
+          dragState.startScrollLeft = itemList.scrollLeft;
+          dragState.didDrag = false;
+          dragState.suppressClick = false;
+          itemList.setPointerCapture(e.pointerId);
+        });
+
+        itemList.addEventListener('pointermove', function (e) {
+          if (dragState.pointerId !== e.pointerId) return;
+          const deltaX = e.clientX - dragState.startX;
+          if (!dragState.didDrag && Math.abs(deltaX) < DRAG_THRESHOLD) return;
+          dragState.didDrag = true;
+          itemList.classList.add('is-dragging');
+          itemList.scrollLeft = dragState.startScrollLeft - deltaX;
+          e.preventDefault();
+        });
+
+        itemList.addEventListener('pointerup', finishItemListDrag);
+        itemList.addEventListener('pointercancel', finishItemListDrag);
+        itemList.addEventListener('click', function (e) {
+          if (!dragState.suppressClick) return;
+          e.preventDefault();
+          e.stopPropagation();
+          dragState.suppressClick = false;
+        }, true);
+
+        function findItem(category, itemId) {
+          return (ITEMS[category] || []).find(function (item) {
+            return item.id === itemId;
+          });
+        }
+
+        function updateTopStarBalance() {
+          starCount.textContent = starBalance;
+          roomStars.setAttribute('aria-label', starBalance + ' stars');
+        }
+
+        function updateUnlockedCard(item) {
+          const card = itemList.querySelector('.bag-item[data-item-id="' + item.id + '"]');
+          if (!card) return;
+          card.dataset.state = 'on';
+          const thumb = card.querySelector('.bag-item-thumb');
+          if (thumb) thumb.src = item.img;
+        }
+
+        function populateExchangeDialog(item, outcome) {
+          dialog.querySelectorAll('.exchange-item-name').forEach(function (node) {
+            node.textContent = item.name;
+          });
+          dialog.querySelectorAll('.exchange-price-value').forEach(function (node) {
+            node.textContent = item.stars;
+          });
+          dialog.querySelectorAll('.exchange-balance-value').forEach(function (node) {
+            node.textContent = starBalance;
+          });
+          dialog.querySelector('.exchange-remaining-value').textContent = outcome.remaining;
+          dialog.querySelector('.exchange-missing-value').textContent = outcome.missing;
+          dialog.querySelectorAll('.exchange-preview-image').forEach(function (image) {
+            image.src = item.img;
+            image.alt = item.name;
+          });
+        }
+
+        function openExchangeDialog(item) {
+          currentExchangeItem = item;
+          const outcome = getExchangeOutcome(starBalance, item.stars);
+          dialog.dataset.mode = outcome.canAfford ? 'sufficient' : 'insufficient';
+          dialog.setAttribute('aria-label', outcome.canAfford ? '确认兑换' : '星星不足');
+          populateExchangeDialog(item, outcome);
+          exchangeOverlay.classList.add('is-open');
+          exchangeOverlay.setAttribute('aria-hidden', 'false');
+          (outcome.canAfford ? confirmExchangeBtn : goPlanBtn).focus();
+        }
+
+        function closeExchangeDialog() {
+          exchangeOverlay.classList.remove('is-open');
+          exchangeOverlay.setAttribute('aria-hidden', 'true');
+          currentExchangeItem = null;
+        }
+
+        itemList.addEventListener('click', function (e) {
+          const card = e.target.closest('.bag-item');
+          if (!card) return;
+          const item = findItem(card.dataset.category, card.dataset.itemId);
+          if (!item || item.unlocked) return;
+          e.preventDefault();
+          openExchangeDialog(item);
+        });
+
+        dialog.querySelectorAll('.exchange-cancel').forEach(function (button) {
+          button.addEventListener('click', closeExchangeDialog);
+        });
+
+        confirmExchangeBtn.addEventListener('click', function () {
+          if (!currentExchangeItem) return;
+          const item = currentExchangeItem;
+          const outcome = getExchangeOutcome(starBalance, item.stars);
+          if (!outcome.canAfford) {
+            openExchangeDialog(item);
+            return;
+          }
+          starBalance = outcome.remaining;
+          item.unlocked = true;
+          updateTopStarBalance();
+          updateUnlockedCard(item);
+          closeExchangeDialog();
+        });
+
+        goPlanBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          closeExchangeDialog();
+          closeBag();
+          roomTip.classList.add('is-hidden');
+          studyTip.classList.add('is-visible');
+          studyTip.setAttribute('aria-hidden', 'false');
+        });
+
+        exchangeOverlay.addEventListener('click', function (e) {
+          if (e.target === exchangeOverlay) closeExchangeDialog();
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && exchangeOverlay.classList.contains('is-open')) {
+            closeExchangeDialog();
+          }
+        });
+
+        function closeBag() {
+          page.classList.remove('bag-open');
+          panel.setAttribute('aria-hidden', 'true');
+          overlay.setAttribute('aria-hidden', 'true');
+        }
+
+        furnitureBtn.addEventListener('click', function () { openPanel('furniture', true); });
+        decorationsBtn.addEventListener('click', function () { openPanel('decoration', true); });
+        closeBtn.addEventListener('click', closeBag);
+        overlay.addEventListener('click', closeBag);
+
+        hotspot.addEventListener('click', function () {
+          roomTip.classList.add('is-hidden');
+          studyTip.classList.add('is-visible');
+          studyTip.setAttribute('aria-hidden', 'false');
+        });
+
+        page.addEventListener('click', function (e) {
+          if (studyTip.classList.contains('is-visible') &&
+              !studyTip.contains(e.target) &&
+              !hotspot.contains(e.target)) {
+            studyTip.classList.remove('is-visible');
+            studyTip.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        if (new URLSearchParams(location.search).get('bag') === 'open') {
+          openPanel('furniture', false);
+          history.replaceState(null, '', location.pathname);
+        }
+      })();
+    </script>
+  </body>
+</html>

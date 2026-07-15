@@ -1,0 +1,212 @@
+:root {
+  --phone-w: 393px;
+  --phone-h: 852px;
+  --green: #4fce69;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #7b7b7b;
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.demo-phone {
+  position: relative;
+  width: min(100vw, var(--phone-w));
+  aspect-ratio: 946 / 1677;
+  min-height: min(100vh, var(--phone-h));
+  margin: 0 auto;
+  overflow: hidden;
+  background: #f7f7f7;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.26);
+}
+
+.screen-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(79, 206, 105, 0.01);
+  cursor: pointer;
+  padding: 0;
+}
+
+.hotspot:focus-visible {
+  outline: 3px solid rgba(79, 206, 105, 0.65);
+  outline-offset: 2px;
+}
+
+.hotspot:active {
+  transform: scale(0.97);
+}
+
+.map-entry {
+  left: 6.8%;
+  top: 31.1%;
+  width: 86.4%;
+  height: 45.2%;
+  border-radius: 14px;
+  background: radial-gradient(circle at 28% 14%, rgba(255, 239, 86, 0.2), rgba(79, 206, 105, 0.06) 34%, rgba(79, 206, 105, 0.01) 68%);
+}
+
+.map-entry::before,
+.map-entry::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.map-entry::before {
+  border: 2px solid rgba(255, 230, 77, 0.55);
+  box-shadow: 0 0 20px rgba(255, 230, 77, 0.42), 0 0 42px rgba(79, 206, 105, 0.2);
+  animation: mapGlow 1.8s ease-in-out infinite;
+}
+
+.map-entry::after {
+  background: linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, 0.2) 46%, transparent 58% 100%);
+  opacity: 0;
+  animation: mapShine 2.4s ease-in-out infinite;
+}
+
+.stage-locked {
+  left: 17.5%;
+  top: 69.7%;
+  width: 23.2%;
+  height: 10.7%;
+}
+
+.tab-plan {
+  left: 4.4%;
+  bottom: 0.5%;
+  width: 16.2%;
+  height: 8.5%;
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 98px;
+  z-index: 5;
+  max-width: 82%;
+  padding: 10px 15px;
+  transform: translate(-50%, 16px);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(34, 34, 34, 0.78);
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.enter-dialog {
+  width: min(326px, calc(100vw - 48px));
+  border: 0;
+  border-radius: 24px;
+  padding: 28px 22px 22px;
+  color: #333333;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.enter-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.enter-dialog h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.enter-dialog p {
+  margin: 12px 0 20px;
+  color: #666666;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  color: #777777;
+  background: #f1f1f1;
+  font-size: 22px;
+  line-height: 28px;
+  cursor: pointer;
+}
+
+.dialog-primary {
+  width: 100%;
+  height: 46px;
+  border: 0;
+  border-radius: 23px;
+  color: #ffffff;
+  background: linear-gradient(180deg, #66dc79, #45c760);
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@keyframes mapGlow {
+  0%,
+  100% {
+    opacity: 0.58;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+@keyframes mapShine {
+  0%,
+  45% {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+
+  62% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(30%);
+  }
+}
