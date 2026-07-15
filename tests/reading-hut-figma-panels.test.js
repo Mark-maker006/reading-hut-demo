@@ -37,7 +37,7 @@ test('ghost and star nodes use transparent layers rather than white flattened ex
   assert.match(css, /\.ghost-plant-item\s*\{[^}]*opacity:\s*0\.6;/s);
 });
 
-test('shared panel preserves the Figma card position with selected-state headroom', () => {
+test('shared panel preserves the Figma card position and vertical headroom', () => {
   assert.match(html, /class="bag-panel-bg"/);
   assert.match(html, /bag-panel-furniture\.png/);
   assert.match(html, /bag-panel-decorative\.png/);

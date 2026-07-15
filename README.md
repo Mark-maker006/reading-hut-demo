@@ -14,7 +14,6 @@ index.html
   -> level-map.html
       -> reading-hut.html
           -> illustration-book.html
-          -> placement-video.html
       -> achievement.html
 ```
 
@@ -36,9 +35,11 @@ http://localhost:4173/
 
 - `index.html` / `styles.css` - plan home page.
 - `level-map.html` / `level-map.css` - scrollable level map.
-- `reading-hut.html` / `reading-hut.css` - reading room, reusable item cards, panels, and exchange interactions.
+- `reading-hut.html` / `reading-hut.css` - reading room, reusable item cards, panels, exchange interactions, and native placement animation layers.
+- `reading-hut-placement-motion.js` - reusable curved flight, SVG trail, CSS smoke, sparkle, and settle animation.
+- `reading-hut-state.js` - versioned local state for stars, unlocked items, and placed items.
+- Demo behavior: refreshing `reading-hut.html` restores 30 stars and clears all exchange/placement progress.
 - `illustration-book.html` / `illustration-book.css` / `illustration-book.js` - furniture and decoration catalog.
-- `placement-video.html` / `placement-video.css` / `placement-video.js` - placement-animation preview.
 - `achievement.html` / `achievement.css` - achievement preview.
 - `reading-hut-exchange.js` - testable exchange and item-order helpers.
 - `assets/` - local runtime artwork only.

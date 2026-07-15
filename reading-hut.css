@@ -361,11 +361,46 @@ body {
   pointer-events: none;
 }
 
+.placement-ghost,
+.placement-item {
+  position: absolute;
+  display: block;
+  object-fit: fill;
+  user-select: none;
+  pointer-events: none;
+}
+
+.placement-item {
+  display: none;
+}
+
+.placement-slot.is-placed .placement-ghost,
+.placement-slot.is-previewing .placement-ghost {
+  display: none;
+}
+
+.placement-slot.is-placed .placement-item,
+.placement-slot.is-previewing .placement-item {
+  display: block;
+}
+
+.placement-slot.is-settling .placement-item {
+  animation: placement-item-settle 1100ms cubic-bezier(0.22, 0.78, 0.16, 1) both;
+  transform-origin: 50% 75%;
+}
+
 .ghost-bookshelf-slot {
   left: 28px;
   top: 473px;
   width: 122.105px;
   height: 145px;
+}
+
+.placement-bookshelf-ghost,
+.placement-bookshelf-item {
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .ghost-floor-overlay {
@@ -375,7 +410,7 @@ body {
   height: 511px;
 }
 
-.ghost-floor-overlay > img {
+.ghost-floor-overlay > .placement-ghost {
   position: absolute;
   left: -1.5px;
   top: -1.5px;
@@ -408,6 +443,13 @@ body {
   height: 139px;
 }
 
+.placement-rug-item {
+  left: 2px;
+  top: 2px;
+  width: 182px;
+  height: 134px;
+}
+
 .ghost-plant-slot {
   left: 28px;
   top: 221px;
@@ -434,6 +476,13 @@ body {
   height: 50.52px;
 }
 
+.placement-plant-item {
+  left: 1.012px;
+  top: 1.52px;
+  width: 40.398px;
+  height: 49.07px;
+}
+
 .ghost-doll-slot {
   left: 71px;
   top: 226px;
@@ -446,6 +495,23 @@ body {
   top: 181px;
   width: 90px;
   height: 80px;
+}
+
+.placement-doll-ghost,
+.placement-doll-item,
+.placement-story-wall-ghost {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.placement-story-wall-item {
+  left: 10px;
+  top: 9px;
+  width: 70px;
+  height: 62px;
+  transform-origin: center;
+  scale: -1 1;
 }
 
 .ghost-star-sticker-slot {
@@ -471,6 +537,13 @@ body {
   top: -0.07px;
   width: 127.444px;
   height: 88.3348px;
+}
+
+.placement-star-sticker-item {
+  left: 0.930967px;
+  top: 0.620642px;
+  width: 125.416077px;
+  height: 86.547455px;
 }
 
 .placement-hotspot {
@@ -576,6 +649,11 @@ body {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
 }
@@ -586,21 +664,10 @@ body {
   height: 126px;
   overflow: visible;
   border-radius: 11px;
-  transition:
-    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 300ms ease;
 }
 
-.bag-item.is-selected {
-  position: relative;
-  z-index: 2;
-}
-
-.bag-item.is-selected .bag-item-card {
-  transform: translateY(-5px);
-  box-shadow:
-    0 0 0 2px rgba(255, 225, 80, 0.92),
-    0 8px 14px rgba(82, 53, 15, 0.42);
+.bag-item.is-placing .bag-item-thumb {
+  opacity: 0.12;
 }
 
 .bag-item-card-bg {
@@ -769,6 +836,144 @@ body {
 .room-action:focus-visible {
   outline: 3px solid rgba(255, 225, 80, 0.8);
   outline-offset: 2px;
+}
+
+/* ── native placement motion ── */
+
+.placement-motion-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.placement-motion-layer.is-active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.placement-flight-trail,
+.placement-smoke-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.placement-flight-path {
+  fill: none;
+  stroke: rgba(255, 246, 180, 0.96);
+  stroke-width: 5px;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 8px rgba(255, 204, 72, 0.72));
+}
+
+.placement-flyer {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  object-fit: fill;
+  transform-origin: 0 0;
+  filter: drop-shadow(0 7px 8px rgba(83, 45, 9, 0.28)) drop-shadow(0 0 7px rgba(255, 241, 137, 0.88));
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.placement-smoke-puff {
+  position: absolute;
+  z-index: 3;
+  width: var(--puff-size);
+  height: var(--puff-size);
+  border: 2px solid rgba(229, 198, 143, 0.7);
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #fffef3 0 35%, #fff3d2 58%, #ead0a3 100%);
+  box-shadow: inset -5px -7px 10px rgba(188, 142, 74, 0.14), 0 4px 8px rgba(82, 49, 15, 0.16);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.placement-smoke-layer.is-active .placement-smoke-puff {
+  animation: placement-smoke-bloom 820ms cubic-bezier(0.2, 0.72, 0.28, 1) var(--puff-delay) both;
+}
+
+.placement-sparkle {
+  position: absolute;
+  z-index: 4;
+  width: 14px;
+  height: 14px;
+  background: #ffe46f;
+  clip-path: polygon(50% 0, 61% 38%, 100% 50%, 61% 62%, 50% 100%, 39% 62%, 0 50%, 39% 38%);
+  filter: drop-shadow(0 0 4px rgba(255, 239, 117, 0.9));
+  opacity: 0;
+  pointer-events: none;
+}
+
+.placement-smoke-layer.is-active .placement-sparkle {
+  animation: placement-sparkle-pop 620ms ease-out var(--sparkle-delay) both;
+}
+
+@keyframes placement-smoke-bloom {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.18);
+  }
+  24% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + var(--puff-x)), calc(-50% + var(--puff-y))) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--puff-x)), calc(-50% + var(--puff-y))) scale(1.32);
+  }
+}
+
+@keyframes placement-sparkle-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.2);
+  }
+  45% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.15);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+  }
+}
+
+@keyframes placement-item-settle {
+  0% {
+    filter: brightness(1.35) drop-shadow(0 0 18px rgba(255, 233, 95, 0.95));
+    transform: scale(0.58) rotate(-3deg);
+  }
+  45% {
+    filter: brightness(1.15) drop-shadow(0 0 12px rgba(255, 222, 72, 0.78));
+    transform: scale(1.08) rotate(1.5deg);
+  }
+  72% {
+    transform: scale(0.97) rotate(-0.6deg);
+  }
+  100% {
+    filter: none;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placement-slot.is-settling .placement-item,
+  .placement-smoke-layer.is-active .placement-smoke-puff,
+  .placement-smoke-layer.is-active .placement-sparkle {
+    animation: none;
+  }
 }
 
 /* ── star exchange dialog (Figma 219:1899 / 219:1905) ── */

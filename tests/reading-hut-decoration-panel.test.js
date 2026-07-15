@@ -38,11 +38,14 @@ test('decoration thumbnails use their individual Figma coordinates', () => {
 });
 
 test('room uses the provided vectorized doll and story-wall PNG exports', () => {
-  assert.match(html, /class="ghost-slot ghost-doll-slot"[^>]*src="\.\/assets\/hut-ghost-doll-off\.png"/);
-  assert.match(html, /class="ghost-slot ghost-story-wall-slot"[^>]*src="\.\/assets\/hut-ghost-story-wall-off\.png"/);
+  assert.match(html, /data-slot="doll"[^>]*data-item-id="doll"/);
+  assert.match(html, /class="placement-ghost placement-doll-ghost"[^>]*src="\.\/assets\/hut-ghost-doll-off\.png"/);
+  assert.match(html, /data-slot="story-wall"[^>]*data-item-id="story-wall"/);
+  assert.match(html, /class="placement-ghost placement-story-wall-ghost"[^>]*src="\.\/assets\/hut-ghost-story-wall-off\.png"/);
   assert.doesNotMatch(html, /ghost-doll-crop|ghost-story-wall-crop|hut-ghost-(?:doll|story-wall)-source\.png/);
   assert.match(css, /\.ghost-doll-slot\s*\{[^}]*left:\s*71px;[^}]*top:\s*226px;[^}]*width:\s*38px;[^}]*height:\s*46\.9063px;/s);
   assert.match(css, /\.ghost-story-wall-slot\s*\{[^}]*left:\s*147px;[^}]*top:\s*181px;[^}]*width:\s*90px;[^}]*height:\s*80px;/s);
+  assert.match(css, /\.placement-story-wall-item\s*\{[^}]*left:\s*10px;[^}]*top:\s*9px;[^}]*width:\s*70px;[^}]*height:\s*62px;[^}]*transform-origin:\s*center;[^}]*scale:\s*-1 1;/s);
 });
 
 test('provided off-state assets are copied without modification', () => {
@@ -59,7 +62,7 @@ test('provided off-state assets are copied without modification', () => {
 });
 
 test('room includes the new Figma star-sticker ghost placement', () => {
-  assert.match(html, /class="ghost-slot ghost-star-sticker-slot"/);
+  assert.match(html, /class="placement-slot ghost-slot ghost-star-sticker-slot"/);
   assert.match(html, /item-star-sticker-off\.png/);
   assert.match(html, /hut-ghost-star-sticker-outline\.svg/);
   assert.match(css, /\.ghost-star-sticker-slot\s*\{[^}]*left:\s*240px;[^}]*top:\s*110px;[^}]*width:\s*127\.541862px;[^}]*height:\s*88\.441437px;/s);

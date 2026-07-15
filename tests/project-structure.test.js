@@ -10,7 +10,6 @@ const activePages = [
   'illustration-book.html',
   'index.html',
   'level-map.html',
-  'placement-video.html',
   'reading-hut.html',
 ];
 
@@ -20,11 +19,17 @@ const activeSources = [
   'illustration-book.css',
   'illustration-book.js',
   'level-map.css',
-  'placement-video.css',
-  'placement-video.js',
   'reading-hut.css',
   'reading-hut-exchange.js',
+  'reading-hut-placement-motion.js',
+  'reading-hut-state.js',
   'styles.css',
+];
+
+const obsoleteSources = [
+  'placement-video.html',
+  'placement-video.css',
+  'placement-video.js',
 ];
 
 const obsoleteAssets = [
@@ -34,6 +39,7 @@ const obsoleteAssets = [
   'assets/bag-panel.png',
   'assets/decorate-page.png',
   'assets/furniture-catalog-4.png',
+  'assets/furniture-flying-animation.mp4',
   'assets/growth-town-reference.png',
   'assets/hero-mascot-layer.png',
   'assets/hut-ghost-floor.png',
@@ -85,6 +91,12 @@ test('active pages and scripts have no broken local references', () => {
 test('obsolete runtime assets are removed', () => {
   for (const asset of obsoleteAssets) {
     assert.equal(fs.existsSync(path.join(root, asset)), false, `${asset} should be removed`);
+  }
+});
+
+test('obsolete standalone placement page is removed', () => {
+  for (const source of obsoleteSources) {
+    assert.equal(fs.existsSync(path.join(root, source)), false, `${source} should be removed`);
   }
 });
 

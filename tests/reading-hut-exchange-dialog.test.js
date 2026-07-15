@@ -62,8 +62,13 @@ test('locked card clicks branch on balance and confirmation performs a real exch
   );
   assert.match(html, /const outcome = getExchangeOutcome\(starBalance, item\.stars\);/);
   assert.match(html, /dialog\.dataset\.mode = outcome\.canAfford \? 'sufficient' : 'insufficient';/);
-  assert.match(html, /starBalance = outcome\.remaining;/);
-  assert.match(html, /item\.unlocked = true;/);
+  assert.match(html, /const \{ createDefaultState, load, save, purchaseItem, placeItem \} = window\.ReadingHutState;/);
+  assert.match(html, /const DEMO_RESET_ON_LOAD = true;/);
+  assert.match(html, /let gameState = DEMO_RESET_ON_LOAD \? save\(createDefaultState\(\)\) : load\(\);/);
+  assert.match(html, /const purchase = purchaseItem\(gameState, item\.id, item\.stars\);/);
+  assert.match(html, /gameState = save\(purchase\.state\);/);
+  assert.match(html, /starBalance = gameState\.stars;/);
+  assert.match(html, /syncItemsFromState\(\);/);
   assert.match(html, /starCount\.textContent = starBalance;/);
   assert.match(html, /card\.dataset\.state = 'on';/);
   assert.match(html, /thumb\.src = item\.img;/);

@@ -12,23 +12,35 @@
       <img class="room-bg" src="./assets/reading-room-background.png" alt="" aria-hidden="true" />
 
       <section class="placement-stage" aria-label="Furniture placement preview">
-        <div class="ghost-slot ghost-floor-overlay" aria-hidden="true">
-          <img src="./assets/hut-ghost-floor.svg" alt="" />
+        <div class="placement-slot ghost-slot ghost-floor-overlay" data-slot="floor" data-item-id="wood-floor" aria-hidden="true">
+          <img class="placement-ghost" src="./assets/hut-ghost-floor.svg" alt="" />
         </div>
-        <img class="ghost-slot ghost-bookshelf-slot" src="./assets/hut-ghost-bookshelf.png" alt="" aria-hidden="true" />
-        <div class="ghost-slot ghost-rug-slot" aria-hidden="true">
-          <img class="ghost-rug-item" src="./assets/item-reading-rug-off.png" alt="" />
-          <img class="ghost-rug-outline" src="./assets/hut-ghost-rug-outline.svg" alt="" />
+        <div class="placement-slot ghost-slot ghost-bookshelf-slot" data-slot="bookshelf" data-item-id="bookshelf" aria-hidden="true">
+          <img class="placement-ghost placement-bookshelf-ghost" src="./assets/hut-ghost-bookshelf.png" alt="" />
+          <img class="placement-item placement-bookshelf-item" src="./assets/bag-bookshelf.png" alt="" />
         </div>
-        <div class="ghost-slot ghost-plant-slot" aria-hidden="true">
-          <img class="ghost-plant-item" src="./assets/item-plant-off.png" alt="" />
-          <img class="ghost-plant-outline" src="./assets/hut-ghost-plant-outline.svg" alt="" />
+        <div class="placement-slot ghost-slot ghost-rug-slot" data-slot="rug" data-item-id="reading-rug" aria-hidden="true">
+          <img class="placement-ghost ghost-rug-item" src="./assets/item-reading-rug-off.png" alt="" />
+          <img class="placement-ghost ghost-rug-outline" src="./assets/hut-ghost-rug-outline.svg" alt="" />
+          <img class="placement-item placement-rug-item" src="./assets/item-reading-rug-on.png" alt="" />
         </div>
-        <img class="ghost-slot ghost-doll-slot" src="./assets/hut-ghost-doll-off.png" alt="" aria-hidden="true" />
-        <img class="ghost-slot ghost-story-wall-slot" src="./assets/hut-ghost-story-wall-off.png" alt="" aria-hidden="true" />
-        <div class="ghost-slot ghost-star-sticker-slot" aria-hidden="true">
-          <img class="ghost-star-sticker-item" src="./assets/item-star-sticker-off.png" alt="" />
-          <img class="ghost-star-sticker-outline" src="./assets/hut-ghost-star-sticker-outline.svg" alt="" />
+        <div class="placement-slot ghost-slot ghost-plant-slot" data-slot="plant" data-item-id="plant" aria-hidden="true">
+          <img class="placement-ghost ghost-plant-item" src="./assets/item-plant-off.png" alt="" />
+          <img class="placement-ghost ghost-plant-outline" src="./assets/hut-ghost-plant-outline.svg" alt="" />
+          <img class="placement-item placement-plant-item" src="./assets/item-plant-on.png" alt="" />
+        </div>
+        <div class="placement-slot ghost-slot ghost-doll-slot" data-slot="doll" data-item-id="doll" aria-hidden="true">
+          <img class="placement-ghost placement-doll-ghost" src="./assets/hut-ghost-doll-off.png" alt="" />
+          <img class="placement-item placement-doll-item" src="./assets/item-doll-on.png" alt="" />
+        </div>
+        <div class="placement-slot ghost-slot ghost-story-wall-slot" data-slot="story-wall" data-item-id="story-wall" aria-hidden="true">
+          <img class="placement-ghost placement-story-wall-ghost" src="./assets/hut-ghost-story-wall-off.png" alt="" />
+          <img class="placement-item placement-story-wall-item" src="./assets/item-story-wall-on.png" alt="" />
+        </div>
+        <div class="placement-slot ghost-slot ghost-star-sticker-slot" data-slot="star-sticker" data-item-id="star-sticker" aria-hidden="true">
+          <img class="placement-ghost ghost-star-sticker-item" src="./assets/item-star-sticker-off.png" alt="" />
+          <img class="placement-ghost ghost-star-sticker-outline" src="./assets/hut-ghost-star-sticker-outline.svg" alt="" />
+          <img class="placement-item placement-star-sticker-item" src="./assets/item-star-sticker-on.png" alt="" />
         </div>
         <a class="placement-hotspot" aria-label="Furniture placement area"></a>
       </section>
@@ -72,6 +84,13 @@
         <div class="bag-item-list" role="list"></div>
         <button class="bag-close" type="button" aria-label="关闭面板"></button>
       </section>
+
+      <div class="placement-motion-layer" aria-hidden="true">
+        <svg class="placement-flight-trail" aria-hidden="true">
+          <path class="placement-flight-path"></path>
+        </svg>
+        <div class="placement-smoke-layer" aria-hidden="true"></div>
+      </div>
 
       <div class="exchange-overlay" aria-hidden="true">
         <section class="exchange-dialog" role="dialog" data-mode="sufficient" aria-modal="true" aria-label="星星兑换">
@@ -142,20 +161,22 @@
       </div>
     </main>
 
+    <script src="./reading-hut-state.js"></script>
+    <script src="./reading-hut-placement-motion.js"></script>
     <script src="./reading-hut-exchange.js"></script>
     <script>
       (function () {
         const ITEMS = {
           furniture: [
-            { id: 'reading-rug', img: './assets/item-reading-rug-on.png', imgOff: './assets/item-reading-rug-off.png', name: '阅读地毯', stars: 10, unlocked: false, newUntil: 0, href: './placement-video.html' },
-            { id: 'wood-floor',  img: './assets/item-wood-floor-on.png',  imgOff: './assets/item-wood-floor-off.png',  name: '木地板',   stars: 20, unlocked: false, newUntil: 0, href: './placement-video.html' },
-            { id: 'bookshelf',   img: './assets/bag-bookshelf.png',       imgOff: './assets/bag-bookshelf-off.png',    name: '小书架',   stars: 45, unlocked: false, newUntil: 0, href: './placement-video.html' },
+            { id: 'reading-rug', slot: 'rug',       img: './assets/item-reading-rug-on.png', imgOff: './assets/item-reading-rug-off.png', name: '阅读地毯', stars: 10, unlocked: false, placed: false, newUntil: 0 },
+            { id: 'wood-floor',  slot: 'floor',     img: './assets/item-wood-floor-on.png',  imgOff: './assets/item-wood-floor-off.png',  name: '木地板',   stars: 20, unlocked: false, placed: false, newUntil: 0 },
+            { id: 'bookshelf',   slot: 'bookshelf', img: './assets/bag-bookshelf.png',       imgOff: './assets/bag-bookshelf-off.png',    name: '小书架',   stars: 45, unlocked: false, placed: false, newUntil: 0 },
           ],
           decoration: [
-            { id: 'plant',        img: './assets/item-plant-on.png',        imgOff: './assets/item-plant-off.png',        name: '小绿植',     stars: 10, unlocked: false, newUntil: 0, href: null },
-            { id: 'star-sticker', img: './assets/item-star-sticker-on.png', imgOff: './assets/item-star-sticker-off.png', name: '星星墙贴',   stars: 10, unlocked: false, newUntil: 0, href: null },
-            { id: 'doll',         img: './assets/item-doll-on.png',         imgOff: './assets/item-doll-off.png',         name: '雪梨玩偶',   stars: 15, unlocked: false, newUntil: 0, href: null },
-            { id: 'story-wall',   img: './assets/item-story-wall-on.png',   imgOff: './assets/item-story-wall-off.png',   name: '故事背景墙', stars: 10, unlocked: false, newUntil: 0, href: null },
+            { id: 'plant',        slot: 'plant',        img: './assets/item-plant-on.png',        imgOff: './assets/item-plant-off.png',        name: '小绿植',     stars: 10, unlocked: false, placed: false, newUntil: 0 },
+            { id: 'star-sticker', slot: 'star-sticker', img: './assets/item-star-sticker-on.png', imgOff: './assets/item-star-sticker-off.png', name: '星星墙贴',   stars: 10, unlocked: false, placed: false, newUntil: 0 },
+            { id: 'doll',         slot: 'doll',         img: './assets/item-doll-on.png',         imgOff: './assets/item-doll-off.png',         name: '雪梨玩偶',   stars: 15, unlocked: false, placed: false, newUntil: 0 },
+            { id: 'story-wall',   slot: 'story-wall',   img: './assets/item-story-wall-on.png',   imgOff: './assets/item-story-wall-off.png',   name: '故事背景墙', stars: 10, unlocked: false, placed: false, newUntil: 0 },
           ],
         };
 
@@ -174,19 +195,27 @@
         const roomStars = document.querySelector('.room-stars');
         const starCount = document.querySelector('.room-star-count');
         const exchangeOverlay = document.querySelector('.exchange-overlay');
+        const placementMotionLayer = document.querySelector('.placement-motion-layer');
+        const placementTrailPath = document.querySelector('.placement-flight-path');
+        const placementSmokeLayer = document.querySelector('.placement-smoke-layer');
         const dialog = document.querySelector('.exchange-dialog');
         const confirmExchangeBtn = document.querySelector('.exchange-confirm');
         const goPlanBtn = document.querySelector('.exchange-go-plan');
         const { getExchangeOutcome, promoteItemById } = window.ReadingHutExchange;
+        const { createDefaultState, load, save, purchaseItem, placeItem } = window.ReadingHutState;
+        const { playPlacementMotion } = window.ReadingHutPlacementMotion;
+        const DEMO_RESET_ON_LOAD = true;
         const NEW_TAG_DURATION_MS = 5000;
         const newTagTimers = new Map();
-        let starBalance = Number(starCount.textContent);
+        let gameState = DEMO_RESET_ON_LOAD ? save(createDefaultState()) : load();
+        let starBalance = gameState.stars;
         let currentExchangeItem = null;
         let currentExchangeCategory = null;
+        let currentPlacementItem = null;
+        let currentPlacementCategory = null;
+        let placementInProgress = false;
         let successTipTimer = null;
         let latestExchangeItemId = null;
-        let selectedItemId = null;
-        let selectedCategory = null;
         const DRAG_THRESHOLD = 6;
         const dragState = {
           pointerId: null,
@@ -199,17 +228,17 @@
         function renderItems(category) {
           itemList.scrollLeft = 0;
           itemList.innerHTML = '';
-          (ITEMS[category] || []).forEach(function (item) {
-            var el = document.createElement(item.href ? 'a' : 'div');
+          (ITEMS[category] || []).filter(function (item) {
+            return !item.placed;
+          }).forEach(function (item) {
+            var el = document.createElement('button');
             el.className = 'bag-item';
+            el.type = 'button';
             el.dataset.itemId = item.id || item.name;
             el.dataset.category = category;
             el.dataset.state = item.unlocked ? 'on' : 'off';
             el.setAttribute('role', 'listitem');
-            if (item.href) {
-              el.href = item.href;
-              el.setAttribute('aria-label', item.name + ' ' + item.stars + '星');
-            }
+            el.setAttribute('aria-label', item.name + ' ' + item.stars + '星');
 
             var card = document.createElement('div');
             card.className = 'bag-item-card';
@@ -265,7 +294,6 @@
         }
 
         function openPanel(category, animate) {
-          clearBagItemSelection();
           const isDecoration = category === 'decoration';
           panelBg.src = isDecoration
             ? './assets/bag-panel-decorative.png'
@@ -299,15 +327,17 @@
           dragState.startScrollLeft = itemList.scrollLeft;
           dragState.didDrag = false;
           dragState.suppressClick = false;
-          itemList.setPointerCapture(e.pointerId);
         });
 
         itemList.addEventListener('pointermove', function (e) {
           if (dragState.pointerId !== e.pointerId) return;
           const deltaX = e.clientX - dragState.startX;
           if (!dragState.didDrag && Math.abs(deltaX) < DRAG_THRESHOLD) return;
-          dragState.didDrag = true;
-          itemList.classList.add('is-dragging');
+          if (!dragState.didDrag) {
+            dragState.didDrag = true;
+            itemList.setPointerCapture(e.pointerId);
+            itemList.classList.add('is-dragging');
+          }
           itemList.scrollLeft = dragState.startScrollLeft - deltaX;
           e.preventDefault();
         });
@@ -327,24 +357,21 @@
           });
         }
 
-        function clearBagItemSelection() {
-          itemList.querySelectorAll('.bag-item.is-selected').forEach(function (card) {
-            card.classList.remove('is-selected');
-            const item = findItem(card.dataset.category, card.dataset.itemId);
-            if (item && item.href) {
-              card.setAttribute('aria-label', item.name + ' ' + item.stars + '星');
-            }
+        function syncItemsFromState() {
+          Object.keys(ITEMS).forEach(function (category) {
+            ITEMS[category].forEach(function (item) {
+              const storedItem = gameState.items[item.id];
+              item.unlocked = Boolean(storedItem && storedItem.unlocked);
+              item.placed = Boolean(storedItem && storedItem.placed);
+            });
           });
-          selectedItemId = null;
-          selectedCategory = null;
         }
 
-        function selectBagItem(card, item) {
-          clearBagItemSelection();
-          selectedItemId = item.id;
-          selectedCategory = card.dataset.category;
-          card.classList.add('is-selected');
-          card.setAttribute('aria-label', item.name + ' 已选中，再次点击放置');
+        function renderPlacementStage() {
+          document.querySelectorAll('.placement-slot[data-item-id]').forEach(function (slot) {
+            const storedItem = gameState.items[slot.dataset.itemId];
+            slot.classList.toggle('is-placed', Boolean(storedItem && storedItem.placed));
+          });
         }
 
         function updateTopStarBalance() {
@@ -358,6 +385,52 @@
           card.dataset.state = 'on';
           const thumb = card.querySelector('.bag-item-thumb');
           if (thumb) thumb.src = item.img;
+        }
+
+        function completePlacement(targetSlot) {
+          if (!currentPlacementItem) return;
+          const item = currentPlacementItem;
+          const category = currentPlacementCategory;
+          const result = placeItem(gameState, item.id);
+          if (result.ok) {
+            gameState = save(result.state);
+            syncItemsFromState();
+            renderPlacementStage();
+            if (panel.dataset.category === category) renderItems(category);
+          }
+          targetSlot.classList.remove('is-previewing', 'is-settling');
+          currentPlacementItem = null;
+          currentPlacementCategory = null;
+          placementInProgress = false;
+        }
+
+        function startPlacement(item, category, card) {
+          if (placementInProgress) return;
+          const sourceThumb = card.querySelector('.bag-item-thumb');
+          const targetSlot = document.querySelector('.placement-slot[data-item-id="' + item.id + '"]');
+          if (!sourceThumb || !targetSlot) return;
+
+          placementInProgress = true;
+          currentPlacementItem = item;
+          currentPlacementCategory = category;
+          card.classList.add('is-placing');
+          playPlacementMotion({
+            layer: placementMotionLayer,
+            trailPath: placementTrailPath,
+            smokeLayer: placementSmokeLayer,
+            sourceElement: sourceThumb,
+            targetElement: targetSlot,
+            imageSrc: item.img,
+            onImpact: function () {
+              targetSlot.classList.add('is-previewing');
+            },
+          }).then(function () {
+            completePlacement(targetSlot);
+          }).catch(function () {
+            completePlacement(targetSlot);
+          }).finally(function () {
+            card.classList.remove('is-placing');
+          });
         }
 
         function hideExchangeSuccessTip() {
@@ -446,17 +519,9 @@
           const item = findItem(card.dataset.category, card.dataset.itemId);
           if (!item) return;
           if (item.unlocked) {
-            if (!item.href) return;
-            if (selectedItemId === item.id && selectedCategory === card.dataset.category) {
-              clearBagItemSelection();
-              return;
-            }
-            e.preventDefault();
-            selectBagItem(card, item);
+            startPlacement(item, card.dataset.category, card);
             return;
           }
-          clearBagItemSelection();
-          e.preventDefault();
           openExchangeDialog(item, card.dataset.category);
         });
 
@@ -473,12 +538,14 @@
             openExchangeDialog(item, category);
             return;
           }
-          starBalance = outcome.remaining;
-          item.unlocked = true;
+          const purchase = purchaseItem(gameState, item.id, item.stars);
+          if (!purchase.ok) return;
+          gameState = save(purchase.state);
+          starBalance = gameState.stars;
+          syncItemsFromState();
           item.newUntil = Date.now() + NEW_TAG_DURATION_MS;
           updateTopStarBalance();
           updateUnlockedCard(item);
-          clearBagItemSelection();
           ITEMS[category] = promoteItemById(ITEMS[category], item.id);
           renderItems(category);
           itemList.scrollLeft = 0;
@@ -508,7 +575,6 @@
 
         function closeBag() {
           hideExchangeSuccessTip();
-          clearBagItemSelection();
           page.classList.remove('bag-open');
           panel.setAttribute('aria-hidden', 'true');
           overlay.setAttribute('aria-hidden', 'true');
@@ -533,6 +599,10 @@
             studyTip.setAttribute('aria-hidden', 'true');
           }
         });
+
+        syncItemsFromState();
+        updateTopStarBalance();
+        renderPlacementStage();
 
         if (new URLSearchParams(location.search).get('bag') === 'open') {
           openPanel('furniture', false);
