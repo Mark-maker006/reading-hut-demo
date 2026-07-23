@@ -11,7 +11,7 @@
   function createDefaultState() {
     return {
       version: 1,
-      stars: 30,
+      stars: 500,
       items: {},
     };
   }

@@ -73,7 +73,7 @@ test(
       await page.locator('.bag-item[data-item-id="wood-floor"]').evaluate((card) => card.click());
       await page.locator('.exchange-confirm').click();
 
-      assert.equal(await page.locator('.room-star-count').textContent(), '10');
+      assert.equal(await page.locator('.room-star-count').textContent(), '480');
       assert.equal(await page.locator('.bag-item').first().getAttribute('data-item-id'), 'wood-floor');
       assert.equal(await page.locator('.bag-item').first().getAttribute('data-state'), 'on');
       assert.equal(await page.locator('.bag-item-new').count(), 1);

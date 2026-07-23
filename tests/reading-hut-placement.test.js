@@ -8,13 +8,32 @@ const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'reading-hut.html'), 'utf8');
 const css = fs.readFileSync(path.join(root, 'reading-hut.css'), 'utf8');
+const motionSource = fs.readFileSync(path.join(root, 'reading-hut-placement-motion.js'), 'utf8');
 
 test('reading hut declares a native motion layer and versioned state script', () => {
   assert.match(html, /<script src="\.\/reading-hut-state\.js"><\/script>/);
   assert.match(html, /<script src="\.\/reading-hut-placement-motion\.js"><\/script>/);
   assert.match(html, /class="placement-motion-layer"[^>]*aria-hidden="true"/);
   assert.match(html, /class="placement-flight-path"/);
+  assert.match(html, /<canvas class="placement-particle-canvas" aria-hidden="true"><\/canvas>/);
   assert.match(html, /class="placement-smoke-layer"/);
+  assert.match(html, /const placementParticleCanvas = document\.querySelector\('\.placement-particle-canvas'\);/);
+  assert.match(html, /particleCanvas:\s*placementParticleCanvas,/);
+  assert.match(css, /\.placement-particle-canvas\s*\{[^}]*pointer-events:\s*none;/s);
+  assert.match(css, /\.placement-particle-canvas\s*\{[^}]*z-index:\s*2;/s);
+  assert.match(html, /<link rel="preload" href="\.\/assets\/placement-smoke\.webp" as="image" type="image\/webp" \/>/);
+  const smokeImageCss = css.match(/\.placement-smoke-image\s*\{([^}]*)\}/s)?.[1] || '';
+  assert.match(smokeImageCss, /position:\s*absolute;/);
+  assert.match(smokeImageCss, /z-index:\s*4;/);
+  assert.match(smokeImageCss, /width:\s*var\(--smoke-image-size\);/);
+  assert.match(smokeImageCss, /height:\s*var\(--smoke-image-size\);/);
+  assert.match(smokeImageCss, /object-fit:\s*contain;/);
+  assert.match(smokeImageCss, /transform:\s*translate\(-50%,\s*-50%\);/);
+  assert.match(smokeImageCss, /pointer-events:\s*none;/);
+  assert.match(motionSource, /startStarTrail\(options\.particleCanvas, layer, flyer\)/);
+  assert.match(motionSource, /await flightAnimation\.finished;\s*stopStarTrailAnimation\(\);\s*impact\(\);/);
+  assert.match(motionSource, /finally\s*\{\s*stopStarTrailAnimation\(true\);/);
+  assert.match(motionSource, /smokeImage\.dispose\(\);\s*smokeLayer\.classList\.remove\('is-active'\);/);
   assert.doesNotMatch(html, /<video|furniture-flying-animation\.mp4/);
   assert.doesNotMatch(html, /href:\s*['"]\.\/placement-video\.html['"]/);
 });
@@ -77,7 +96,7 @@ test('demo reload restores stars and clears all placement progress', {
     await page.locator('.exchange-confirm').click();
 
     const purchasedState = await page.evaluate(() => JSON.parse(localStorage.getItem('reading-hut-state-v1')));
-    assert.equal(purchasedState.stars, 20);
+    assert.equal(purchasedState.stars, 490);
     assert.deepEqual(purchasedState.items['reading-rug'], { unlocked: true, placed: false });
 
     await page.locator('.bag-item[data-item-id="reading-rug"]').click();
@@ -95,7 +114,7 @@ test('demo reload restores stars and clears all placement progress', {
     assert.equal(placedState.items['reading-rug'].placed, true);
 
     await page.reload();
-    assert.equal(await page.locator('.room-star-count').textContent(), '30');
+    assert.equal(await page.locator('.room-star-count').textContent(), '500');
     assert.doesNotMatch(await page.locator('[data-slot="rug"]').getAttribute('class'), /is-placed/);
     await page.locator('.room-action-bag').evaluate((button) => button.click());
     await page.waitForTimeout(450);

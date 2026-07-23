@@ -1,6 +1,8 @@
 :root {
   --phone-w: 393px;
   --phone-h: 852px;
+  --map-w: 375;
+  --map-h: 812;
 }
 
 * {
@@ -27,29 +29,7 @@ body {
   box-shadow: 0 20px 60px rgb(0 0 0 / 26%);
 }
 
-.map-scroll {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
-}
-
-.map-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.map-canvas {
-  position: relative;
-  width: calc(100% * 784 / 786);
-  aspect-ratio: 784 / 2303;
-  margin-left: calc(100% * 0.5 / 786);
-}
-
-.map-art {
+.map-final-art {
   display: block;
   width: 100%;
   height: 100%;
@@ -58,172 +38,49 @@ body {
   user-select: none;
 }
 
-.map-nodes {
+html.map-entering-from-home .map-final-art {
+  opacity: 1;
+  animation: none;
+}
+
+.map-hotspots {
   position: absolute;
   inset: 0;
   z-index: 2;
   pointer-events: none;
 }
 
-.map-node {
+.map-hotspot {
   position: absolute;
   display: block;
-  margin: 0;
-  object-fit: fill;
-  user-select: none;
-}
-
-.map-node img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  user-select: none;
-}
-
-.map-node--start {
-  left: calc(100% * 99.5 / 784);
-  top: calc(100% * 157 / 2303);
-  width: calc(100% * 69 / 784);
-  height: calc(100% * 108 / 2303);
-}
-
-.map-node--house {
-  left: calc(100% * 92 / 784);
-  top: calc(100% * 265 / 2303);
-  width: calc(100% * 254 / 784);
-  height: calc(100% * 223 / 2303);
-  z-index: 3;
   border: 0;
   padding: 0;
+  border-radius: 12px;
+  pointer-events: auto;
   cursor: pointer;
-  pointer-events: auto;
   text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.map-node--flag {
-  left: calc(100% * 528 / 784);
-  top: calc(100% * 463 / 2303);
-  width: calc(100% * 45 / 784);
-  height: calc(100% * 69 / 2303);
-}
-
-.map-node--reward {
-  left: calc(100% * 480 / 784);
-  top: calc(100% * 531 / 2303);
-  width: calc(100% * 76 / 784);
-  height: calc(100% * 71 / 2303);
-}
-
-.map-node--locked {
-  left: calc(100% * var(--x) / 784);
-  top: calc(100% * var(--y) / 2303);
-  width: calc(100% * 177 / 784);
-  height: calc(100% * 203 / 2303);
-}
-
-.map-node--locked-1 {
-  --x: 206;
-  --y: 575;
-}
-
-.map-node--locked-2 {
-  --x: 412;
-  --y: 875;
-}
-
-.map-node--locked-3 {
-  --x: 206;
-  --y: 1127;
-}
-
-.map-node--locked-4 {
-  --x: 440;
-  --y: 1404;
-}
-
-.map-ui {
-  position: absolute;
-  top: min(calc(100vw * 18 / 786), 9px);
-  left: calc(100% * 24 / 786);
-  z-index: 10;
-  display: flex;
-  align-items: flex-start;
-  width: calc(100% * 743 / 786);
-  height: min(calc(100vw * 63 / 786), 31.5px);
-  gap: min(calc(100vw * 15 / 786), 7.5px);
-  pointer-events: none;
-}
-
-.back-button,
-.achievement-button {
-  display: block;
-  flex: 0 0 auto;
-  border: 0;
-  padding: 0;
-  text-decoration: none;
-  pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
 
 .back-button {
-  width: min(calc(100vw * 65 / 786), 32.5px);
-  height: min(calc(100vw * 60 / 786), 30px);
+  left: calc(100% * 15 / 375);
+  top: calc(100% * 51 / 812);
+  width: calc(100% * 31 / 375);
+  height: calc(100% * 31 / 812);
 }
 
-.back-button img,
-.achievement-button img,
-.map-title img,
-.star-count,
-.coming-button {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  user-select: none;
-  pointer-events: none;
-}
-
-.map-title {
-  display: flex;
-  flex: 0 0 auto;
-  align-items: flex-start;
-  gap: min(calc(100vw * 13 / 786), 6.5px);
-  margin: 0;
-  color: #000;
-  font-size: min(calc(100vw * 32 / 786), 16px);
-  font-weight: 700;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.map-title img {
-  width: min(calc(100vw * 29 / 786), 14.5px);
-  height: min(calc(100vw * 26 / 786), 13px);
-}
-
-.star-count {
-  width: min(calc(100vw * 152 / 786), 76px);
-  height: min(calc(100vw * 61 / 786), 30.5px);
-  margin-left: auto;
+.map-node--house {
+  left: calc(100% * 45 / 375);
+  top: calc(100% * 130 / 812);
+  width: calc(100% * 185 / 375);
+  height: calc(100% * 145 / 812);
 }
 
 .achievement-button {
-  width: min(calc(100vw * 148 / 786), 74px);
-  height: min(calc(100vw * 63 / 786), 31.5px);
-  margin-left: min(calc(100vw * 13 / 786), 6.5px);
-}
-
-.coming-button {
-  position: absolute;
-  left: 50%;
-  bottom: min(calc(100vw * 40 / 786), 20px);
-  z-index: 9;
-  width: min(calc(100vw * 383 / 786), 191.5px);
-  height: min(calc(100vw * 65 / 786), 32.5px);
-  transform: translateX(-50%);
+  left: calc(100% * 292 / 375);
+  top: calc(100% * 50 / 812);
+  width: calc(100% * 68 / 375);
+  height: calc(100% * 35 / 812);
 }
 
 .back-button:focus-visible,
@@ -231,4 +88,17 @@ body {
 .map-node--house:focus-visible {
   outline: 3px solid rgb(79 206 105 / 65%);
   outline-offset: 2px;
+}
+
+@media (max-width: 392px) {
+  .level-map-page {
+    width: 100vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.map-entering-from-home .map-final-art {
+    animation: none;
+    opacity: 1;
+  }
 }

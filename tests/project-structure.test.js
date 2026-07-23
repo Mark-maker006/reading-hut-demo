@@ -15,6 +15,7 @@ const activePages = [
 
 const activeSources = [
   ...activePages,
+  'audio-manager.js',
   'achievement.css',
   'illustration-book.css',
   'illustration-book.js',

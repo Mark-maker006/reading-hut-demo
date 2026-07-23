@@ -20,11 +20,11 @@ test('room renders all updated Figma ghost placements', () => {
   assert.match(css, /\.ghost-plant-slot\s*\{[^}]*left:\s*28px;[^}]*top:\s*221px;[^}]*width:\s*42\.705px;[^}]*height:\s*52\.047px;/s);
 });
 
-test('topbar uses the updated 30-star Figma node', () => {
-  assert.match(html, /class="room-stars"[^>]*aria-label="30 stars"/);
+test('topbar uses the updated 500-star balance', () => {
+  assert.match(html, /class="room-stars"[^>]*aria-label="500 stars"/);
   assert.match(html, /room-star-icon\.svg/);
   assert.match(html, /room-star-plus\.png/);
-  assert.match(html, /class="room-star-count"[^>]*>30</);
+  assert.match(html, /class="room-star-count"[^>]*>500</);
   assert.match(css, /\.room-stars\s*\{[^}]*position:\s*absolute;[^}]*left:\s*279px;[^}]*top:\s*4px;[^}]*width:\s*94px;[^}]*height:\s*30px;/s);
 });
 

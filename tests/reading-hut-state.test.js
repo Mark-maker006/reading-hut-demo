@@ -8,7 +8,7 @@ test('default state is versioned with the initial star balance', () => {
   assert.equal(STORAGE_KEY, 'reading-hut-state-v1');
   assert.deepEqual(createDefaultState(), {
     version: 1,
-    stars: 30,
+    stars: 500,
     items: {},
   });
 });
@@ -21,7 +21,7 @@ test('purchase atomically deducts stars and unlocks the requested item', () => {
   assert.equal(result.ok, true);
   assert.deepEqual(result.state, {
     version: 1,
-    stars: 20,
+    stars: 490,
     items: {
       'reading-rug': { unlocked: true, placed: false },
     },
@@ -31,7 +31,7 @@ test('purchase atomically deducts stars and unlocks the requested item', () => {
 
 test('purchase rejects an unaffordable item without changing state', () => {
   const { createDefaultState, purchaseItem } = require(stateApiPath);
-  const before = createDefaultState();
+  const before = { ...createDefaultState(), stars: 30 };
   const result = purchaseItem(before, 'bookshelf', 45);
 
   assert.equal(result.ok, false);
@@ -68,7 +68,7 @@ test('load recovers from malformed storage and save writes normalized state', ()
     },
   };
 
-  assert.equal(load(storage).stars, 30);
+  assert.equal(load(storage).stars, 500);
   const saved = save({ version: 99, stars: 12, items: { plant: { unlocked: true } } }, storage);
   assert.deepEqual(saved, {
     version: 1,

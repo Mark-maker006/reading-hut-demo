@@ -31,6 +31,17 @@ Then open:
 http://localhost:4173/
 ```
 
+### Same-WLAN preview
+
+Run the reusable LAN server from this folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start-lan-server.ps1
+```
+
+The script listens on `0.0.0.0:8080` and prints the current WLAN URL. Devices on
+the same WLAN can open that URL while this computer and the server remain on.
+
 ## Project structure
 
 - `index.html` / `styles.css` - plan home page.

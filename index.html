@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>悦读小达人 - Frame 40</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260722c" />
+    <script src="./audio-manager.js" defer></script>
   </head>
   <body>
     <main class="phone" aria-label="悦读小达人首页 Frame 40">
       <section class="hero" aria-label="学习概览">
-        <img class="hero-art" src="./assets/frame40/hero-raw-08.png" alt="" aria-hidden="true" />
+        <img class="hero-art" src="./assets/frame40/hero-lanhu-game-entry.png" alt="" aria-hidden="true" />
+        <img class="hero-mask" src="./assets/frame40/hero-lanhu-map-transition-mask.png" alt="" aria-hidden="true" />
+        <img class="hero-mask hero-mask-lower" src="./assets/frame40/hero-lanhu-map-lower-transition.png" alt="" aria-hidden="true" />
         <img class="hero-ip-art" src="./assets/frame40/entrance-attracts-ip.png" alt="" aria-hidden="true" />
-        <a class="hero-ip" href="./level-map.html" aria-label="进入关卡地图"></a>
+        <a class="hero-ip" href="./level-map.html?v=20260722" data-audio="entrance-enter" aria-label="进入关卡地图"></a>
 
         <div class="statusbar" aria-label="状态栏">
           <span class="status-time">9:41</span>
@@ -23,7 +26,7 @@
           </span>
         </div>
 
-        <header class="profile">
+        <header class="profile" data-home-transition-piece>
           <div class="name-row">
             <h1>Hi~Nicole</h1>
             <button class="level-link" type="button">阅读进阶者</button>
@@ -32,7 +35,7 @@
         </header>
       </section>
 
-      <section class="weekly" aria-label="本周学习">
+      <section class="weekly" aria-label="本周学习" data-home-transition-piece>
         <img src="./assets/frame40/weekly-147-1455-export-clean.png" alt="本周学习，04.20-04.26，第1周。阅读篇数15篇，阅读时间48分，学习词汇20个。" />
         <div class="sr-only">
           <h2>本周学习</h2>
@@ -42,7 +45,7 @@
         </div>
       </section>
 
-      <section class="reading-card" aria-label="今日阅读计划">
+      <section class="reading-card" aria-label="今日阅读计划" data-home-transition-piece>
         <section class="today">
           <h2>今日阅读计划<span class="sparkles" aria-hidden="true"></span></h2>
           <article class="main-book">
@@ -89,7 +92,7 @@
         </section>
       </section>
 
-      <section class="next-plan" aria-label="接下来计划">
+      <section class="next-plan" aria-label="接下来计划" data-home-transition-piece>
         <h2>接下来计划</h2>
         <div class="timeline">
           <article class="locked-card">
@@ -132,9 +135,40 @@
         </div>
       </section>
 
-      <nav class="tabbar" aria-label="底部导航">
+      <nav class="tabbar" aria-label="底部导航" data-home-transition-piece>
         <img src="./assets/frame40/tab-150-2055-export-clean.png" alt="阅读、单词卡、学习、口语、我的" />
       </nav>
+
+      <div class="home-map-transition" aria-hidden="true">
+        <img class="transition-map-base" src="./assets/map-transition-base-lanhu.png" alt="" />
+        <div class="transition-map-ui">
+          <div class="statusbar transition-map-statusbar">
+            <span class="status-time">9:41</span>
+            <span class="status-icons">
+              <span class="cellular"><i></i><i></i><i></i><i></i></span>
+              <span class="wifi"></span>
+              <span class="battery"></span>
+            </span>
+          </div>
+          <img class="transition-map-ui-back" src="./assets/map-ui-back-lanhu.png" alt="" />
+          <img class="transition-map-ui-title" src="./assets/map-ui-title-lanhu.png" alt="" />
+          <div class="transition-map-ui-stat transition-map-ui-stars">
+            <img class="transition-map-ui-panel" src="./assets/map-ui-star-panel-lanhu.png" alt="" />
+            <img class="transition-map-ui-icon" src="./assets/map-ui-star-lanhu.png" alt="" />
+            <span><strong>60</strong><small>/100</small></span>
+          </div>
+          <div class="transition-map-ui-stat transition-map-ui-achievement">
+            <img class="transition-map-ui-panel" src="./assets/map-ui-achievement-panel-lanhu.png" alt="" />
+            <img class="transition-map-ui-icon" src="./assets/map-ui-achievement-medal-lanhu.png" alt="" />
+            <span>成就</span>
+          </div>
+        </div>
+        <img class="transition-map-house" src="./assets/map-house.png" alt="" />
+        <div class="transition-focus-mask"></div>
+        <img class="transition-map-cloud" src="./assets/map-cloud-overlay.png" alt="" />
+        <img class="transition-map-preview" src="./assets/map-final-lanhu.png" alt="" />
+      </div>
     </main>
+    <script src="./home-map-transition.js?v=20260722b" defer></script>
   </body>
 </html>

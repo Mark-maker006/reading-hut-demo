@@ -5,50 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>雪梨主题小镇关卡地图</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./level-map.css" />
+    <script src="./map-entry-transition.js"></script>
+    <link rel="stylesheet" href="./level-map.css?v=20260722" />
+    <script src="./audio-manager.js" defer></script>
   </head>
-  <body>
+  <body data-audio-bgm="map-bgm">
     <main class="level-map-page" aria-label="雪梨主题小镇关卡地图">
-      <div class="map-scroll">
-        <div class="map-canvas">
-          <img class="map-art" src="./assets/map-base.png" alt="雪梨主题小镇关卡地图" />
+      <img class="map-final-art" src="./assets/map-final-lanhu.png" alt="雪梨主题小镇关卡地图" />
 
-          <div class="map-nodes" aria-label="关卡节点">
-            <img class="map-node map-node--start" src="./assets/map-start.png" alt="起点" />
-
-            <a class="map-node map-node--house" href="./reading-hut.html" aria-label="进入阅读小屋">
-              <img src="./assets/map-house.png" alt="阅读小屋" />
-            </a>
-
-            <img class="map-node map-node--flag" src="./assets/map-flag.png" alt="关卡旗帜" />
-            <img class="map-node map-node--reward" src="./assets/map-star-award.png" alt="星币奖励" />
-
-            <img class="map-node map-node--locked map-node--locked-1" src="./assets/map-house-locked.png" alt="未解锁关卡" />
-            <img class="map-node map-node--locked map-node--locked-2" src="./assets/map-house-locked.png" alt="未解锁关卡" />
-            <img class="map-node map-node--locked map-node--locked-3" src="./assets/map-house-locked.png" alt="未解锁关卡" />
-            <img class="map-node map-node--locked map-node--locked-4" src="./assets/map-house-locked.png" alt="未解锁关卡" />
-          </div>
-        </div>
-      </div>
-
-      <header class="map-ui" aria-label="地图信息">
-        <a class="back-button" href="./index.html" aria-label="返回首页">
-          <img src="./assets/map-back.png" alt="" aria-hidden="true" />
-        </a>
-
-        <h1 class="map-title">
-          <span>雪梨主题小镇</span>
-          <img src="./assets/map-font-star.png" alt="" aria-hidden="true" />
-        </h1>
-
-        <img class="star-count" src="./assets/map-star-count.png" alt="星币数量 60/100" />
-
-        <a class="achievement-button" href="./achievement.html" aria-label="进入成就页面">
-          <img src="./assets/map-achievement-icon.png" alt="" aria-hidden="true" />
-        </a>
-      </header>
-
-      <img class="coming-button" src="./assets/map-coming-button.png" alt="Coming Soon" />
+      <nav class="map-hotspots" aria-label="地图交互">
+        <a class="map-hotspot back-button" href="./index.html" aria-label="返回首页"></a>
+        <a class="map-hotspot map-node--house" href="./reading-hut.html" aria-label="进入阅读小屋"></a>
+        <a class="map-hotspot achievement-button" href="./achievement.html" aria-label="进入成就页面"></a>
+      </nav>
     </main>
   </body>
 </html>
